@@ -1,1 +1,4 @@
-
+body {
+    display: block;
+    margin: hsl(225deg 15% 40%) 8px;
+}
