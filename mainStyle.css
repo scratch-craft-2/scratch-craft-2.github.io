@@ -1,8 +1,7 @@
 html { 
   body {
    font-family: "Noto Sans", sans-serif;
-   color: var(--text);
+   color: hsl(225deg 15% 40%) ;
    margin: 0;
-   background: linear-gradient(to right, var(--looks-main-90) 0%, var(--looks-bg) 10% 90%, var(--looks-main-90) 100%);
   }
 }
