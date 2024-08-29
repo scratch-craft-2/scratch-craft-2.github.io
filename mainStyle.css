@@ -5,3 +5,16 @@ html {
    margin: 0;
   }
 }
+a.link {
+  border-radius: 10px;
+  padding: 2px 5px;
+  background: var(--link-90);
+  color: var(--link-50);
+  font-weight: bold;
+  text-decoration: none;
+  transition: 0.3s linear;
+}
+a.link:hover {
+  background: var(--link-50);
+  color: #ffffff;
+}
