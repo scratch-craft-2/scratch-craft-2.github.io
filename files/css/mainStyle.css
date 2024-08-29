@@ -1,7 +1,7 @@
 html {   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
   }
-nav { background-color: #74992e; height="140" color="white"}
+nav { background-color: #3f98ff; height="140" color="white"}
 body {
    font-family: "Noto Sans", sans-serif;
    color: hsl(225deg 15% 40%) ;
