@@ -1,7 +1,7 @@
 html {   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
   }
-div.nav { background-color: #3f98ff; height: 50 ; color: #FFFFFF ; width: 1550px;  box-shadow: 0px 1px 10px -3px #000000;}
+div.nav { background-color: #3f98ff; height: 50 ; color: #FFFFFF ; width: 1540px;  box-shadow: 0px 1px 10px -3px #000000;}
 body {
    font-family: "Noto Sans", sans-serif;
    color: hsl(225deg 15% 40%) ;
