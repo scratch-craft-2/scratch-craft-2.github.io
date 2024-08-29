@@ -1,9 +1,10 @@
-html { 
-  body {
+html {   --link-50: hsl(30deg 100% 50%);
+  --link-90: hsl(30deg 100% 90%);
+  }
+body {
    font-family: "Noto Sans", sans-serif;
    color: hsl(225deg 15% 40%) ;
-   margin: 0;
-  }
+   margin: 0; }
 div.content {
   display: flex;
   flex-direction: column;
@@ -46,5 +47,4 @@ a.link {
 a.link:hover {
   background: var(--link-50);
   color: #ffffff;
-}
 }
