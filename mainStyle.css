@@ -4,7 +4,14 @@ html {
    color: hsl(225deg 15% 40%) ;
    margin: 0;
   }
+div.content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  gap: 20px;
 }
+
 a.link {
   border-radius: 10px;
   padding: 2px 5px;
@@ -17,4 +24,5 @@ a.link {
 a.link:hover {
   background: var(--link-50);
   color: #ffffff;
+}
 }
