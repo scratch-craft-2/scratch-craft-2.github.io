@@ -11,7 +11,29 @@ div.content {
   padding: 20px;
   gap: 20px;
 }
-
+div.content_group.image-and-text {
+  display: flex;
+  align-items: center;
+  gap: 50px;
+}
+div.content_group.image-and-text.left {
+  flex-direction: row;
+}
+div.content_group.image-and-text.right {
+  flex-direction: row-reverse;
+}
+div.content_group.image-and-text > div {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  gap: 20px;
+  max-width: 700px;
+  width: 50%;
+}
+div.content_group.image-and-text > img {
+  max-width: 700px;
+  width: 50%;
+}
 a.link {
   border-radius: 10px;
   padding: 2px 5px;
