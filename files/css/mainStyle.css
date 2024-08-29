@@ -1,7 +1,7 @@
 html {   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
   }
-div.nav { background-color: #3f98ff; height: 50 ; color: #FFFFFF ; width: 1000px;}
+div.nav { background-color: #3f98ff; height: 50 ; color: #FFFFFF ; width: 1600px;}
 body {
    font-family: "Noto Sans", sans-serif;
    color: hsl(225deg 15% 40%) ;
@@ -49,4 +49,4 @@ a.link:hover {
   background: var(--link-50);
   color: #ffffff;
 }
-div.my {border-radius: 10px; background-color: #e4e4e4; height: 150 ; color: #2d2d2d ; width: 1000px;}
+div.my {border-radius: 10px; background-color: #e4e4e4; height: 150 ; color: #2d2d2d ; width: 1600px;}
