@@ -69,6 +69,8 @@ height: 100 ; color: #2d2d2d ;
   padding: 20px;
   font-weight: normal;
   text-decoration: none;
+  height: 50 ;
+  width: 50px;
   transition: 0.3s linear;
 }
 .button:hover {
