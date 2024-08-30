@@ -55,3 +55,23 @@ border-radius: 10px;
 height: 100 ; color: #2d2d2d ;
  width: 1300px;
 }
+.button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  background: var(--ui-main-90);
+  color: var(--text);
+  font-size: 25px;
+  border-bottom: 2px solid var(--ui-main-70);
+  border-radius: 10px;
+  padding: 20px;
+  font-weight: normal;
+  text-decoration: none;
+  transition: 0.3s linear;
+}
+.button:hover {
+  background: var(--button-hov-bg)!important;
+  color: var(--button-hov-text)!important;
+  border-bottom-color: var(--button-hov-border)!important;
