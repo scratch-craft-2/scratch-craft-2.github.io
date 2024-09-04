@@ -112,3 +112,11 @@ background-color: #ff5858;
 color: #FFFFFF;
 font-size: 20px;
 }
+button.rutube { 
+width: 300px; 
+height: 40px;
+border-radius: 10px;
+background-color: #1c232b;;
+color: #FFFFFF;
+font-size: 20px;
+}
