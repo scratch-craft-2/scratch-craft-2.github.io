@@ -103,3 +103,11 @@ div.butt{
   height: 20;
   width: 400px;
 }
+
+button.yt { 
+width: 230px; 
+height: 60px;
+border-radius: 10px;
+background-color: #ff5858;
+color: #FFFFFF;
+}
