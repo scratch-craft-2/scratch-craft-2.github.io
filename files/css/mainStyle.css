@@ -112,7 +112,9 @@ border-radius: 10px;
 background-color: #ff5858;
 color: #FFFFFF;
 font-size: 20px;
+transition: 0.3s;
 }
+button.yt:hover {width: 340px;} 
 button.rutube { 
 width: 300px; 
 height: 40px;
@@ -120,4 +122,6 @@ border-radius: 10px;
 background-color: #001737;
 color: #FFFFFF;
 font-size: 20px;
+transition: 0.3s;
 }
+button.rutube:hover {width: 340px;} 
