@@ -129,8 +129,8 @@ button.vk {
 width: 300px; 
 height: 40px;
 border-radius: 10px;
-background-color: #ff5858;
-color: #0077ff;
+background-color: #0077ff;
+color:#FFFFFF;
 font-size: 20px;
 transition: 0.3s;
 }
@@ -139,8 +139,8 @@ button.dzen {
 width: 300px; 
 height: 40px;
 border-radius: 10px;
-background-color: #001737;
-color: #000000;
+background-color: #000000;
+color:#FFFFFF;
 font-size: 20px;
 transition: 0.3s;
 }
