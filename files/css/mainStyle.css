@@ -113,6 +113,7 @@ background-color: #ff5858;
 color: #FFFFFF;
 font-size: 20px;
 transition: 0.3s;
+padding: -10px;
 }
 button.yt:hover {width: 340px;} 
 button.rutube { 
@@ -123,6 +124,7 @@ background-color: #001737;
 color: #FFFFFF;
 font-size: 20px;
 transition: 0.3s;
+padding: -10px;
 }
 button.rutube:hover {width: 340px;} 
 button.vk { 
@@ -133,9 +135,11 @@ background-color: #0077ff;
 color:#FFFFFF;
 font-size: 20px;
 transition: 0.3s;
+padding: -10px;
 }
 button.vk:hover {width: 340px;} 
 button.dzen { 
+padding: -10px;
 width: 300px; 
 height: 40px;
 border-radius: 10px;
