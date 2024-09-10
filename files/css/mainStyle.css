@@ -125,3 +125,24 @@ font-size: 20px;
 transition: 0.3s;
 }
 button.rutube:hover {width: 340px;} 
+button.vk { 
+width: 300px; 
+height: 40px;
+border-radius: 10px;
+background-color: #ff5858;
+color: #0077ff;
+font-size: 20px;
+transition: 0.3s;
+}
+button.vk:hover {width: 340px;} 
+button.dzen { 
+width: 300px; 
+height: 40px;
+border-radius: 10px;
+background-color: #001737;
+color: #000000;
+font-size: 20px;
+transition: 0.3s;
+}
+button.dzen:hover {width: 340px;} 
+
