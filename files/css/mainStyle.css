@@ -9,6 +9,7 @@ div.nav {
   height: 60;
   color: #FFFFFF;
   box-shadow: 0px 1px 10px -3px #000000;
+  width: 100%;
 }
 
 body {
