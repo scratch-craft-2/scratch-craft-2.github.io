@@ -11,6 +11,7 @@ div.nav {
   box-shadow: 0px 1px 10px -3px #000000;
   width: 100%;
 }
+div.nav.404 { background-color: #f2575d ; }
 
 body {
    font-family: "Noto Sans", sans-serif;
