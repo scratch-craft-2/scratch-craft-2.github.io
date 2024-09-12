@@ -146,3 +146,22 @@ transition: 0.3s;
 }
 button.dzen:hover {width: 340px;} 
 
+[data-title] {
+ position: relative; 
+ cursor: pointer; 
+}
+[data-title]::after {
+ content: attr(data-title); 
+ position: absolute; 
+ left: 0; top: 1em; 
+ opacity: 0; 
+ transition: 0.5s; 
+ pointer-events: none;
+ background: #ffffff; 
+ padding: 0.5em; 
+ box-shadow: 0px 0px 10px #000000 ;
+ border-radius: 10px ;
+}
+[data-title]:hover::after {
+ opacity: 1;
+}
