@@ -157,7 +157,7 @@ button.dzen:hover {width: 340px;}
 [data-title]::after {
  content: attr(data-title); 
  position: absolute; 
- left: 0; top: 1em; 
+ left: 3; top: 2em; 
  opacity: 0; 
  transition: 0.5s; 
  pointer-events: none;
