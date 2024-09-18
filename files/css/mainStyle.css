@@ -1,6 +1,10 @@
 html {
   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
+::selection {
+    background: #ff5e6b; 
+    color: #fff;
+   }
 }
 div.tutorial { color: #575e75   height: 300;  width: 720px;  border-radius: 15px; transition: 0.3s; box-shadow: 0px 0px 7px #575e75;}
 div.tutorial:hover {box-shadow: 0px 0px 15px #575e75;}
