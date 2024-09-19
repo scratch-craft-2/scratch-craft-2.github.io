@@ -3,6 +3,7 @@ html {
   --link-90: hsl(30deg 100% 90%);
 ::selection {
     background: #ff5e6b; 
+    border-radius: 10px;
     color: #fff;
    }
 }
@@ -67,7 +68,9 @@ a.link {
   text-decoration: none;
   transition: 0.3s linear;
 }
-
+a.link:selection {
+    color: #fff;
+}
 a.link:hover {
   background: var(--link-50);
   color: #ffffff;
