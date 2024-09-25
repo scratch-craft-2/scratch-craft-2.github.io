@@ -110,7 +110,7 @@
     </div>
 
 <hr align="center" width="1300" size="3" color="#575e75" />
-<a href="/туториалы" style=" text-decoration:none; color: hsl(225deg 15% 40%);">
+<a href="/туториалы" style=" text-decoration:none; color: hsl(225deg 15% 40%);" onclick="playMusic()" >
 <div class="content" >
       <div class="tutorial">     
       <div class="content_group image-and-text left">   
@@ -123,5 +123,9 @@
         </div>
     </div>
 </a>
+<script>function playMusic(){
+  var music = new Audio('/files/audio/click.wav');
+  music.play();
+  }</script>
   </body>
 </html>
