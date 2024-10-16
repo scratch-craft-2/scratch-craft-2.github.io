@@ -23,6 +23,22 @@ body {
    margin: 0;
 }
 
+.logo {
+    /* transform: rotate(0deg); */
+    transition: transform .3s;
+}
+
+/* .logo:hover ~ .logo {
+    transform: rotate(360deg);
+} */
+
+#logo-detector{
+    z-index: 1000;
+    /* visibility: hidden; */
+    opacity: 0%;
+}
+
+
 div.content {
   display: flex;
   flex-direction: column;
