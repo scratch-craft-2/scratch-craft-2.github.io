@@ -1,7 +1,7 @@
 html {
   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
-::selection {
+::selection { 
     background: #ff5e6b; 
     border-radius: 10px;
     color: #fff;
