@@ -1,0 +1,9 @@
+
+<script>
+let giftcode;
+giftcode = " ";
+switch($giftcode) {
+    case 'значение': echo 'Значение переменной'; break;
+    default: echo 'Значение по умолчанию';
+}
+</script>
