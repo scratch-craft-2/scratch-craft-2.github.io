@@ -7,9 +7,8 @@ const downloadUrl = (url, file) => {
   link.click();
   link.remove();
 };
-window.onload = () => {
-  switch($_GET['giftcode']) {
-     case "gift":
-        downloadUrl("https://scratch-craft-2.github.io/files/pinfree.sprite3", "pinfree.sprite3");
+switch (new URLSearchParams(location.search).get("giftcode")) {
+  case "gift":
+    downloadUrl("/files/пин конца (1).sprite3", "пин.sprite3");
 }
 </script>
