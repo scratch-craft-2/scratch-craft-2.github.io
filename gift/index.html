@@ -1,5 +1,14 @@
 <script>
-switch($_GET['giftcode']) {
-  case 'gift':
-document.getElementById('target').insertAdjacentHTML('beforeend', '<a class="get_sprite" download="пин.sprite3" href="/files/пин конца (1).sprite3"><script type="text/javascript">document.getElementsByClassName("get_sprite")[0].click();</script>');
+const downloadUrl = (url, file) => {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = file;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+};
+switch (new URLSearchParams(location.search).get("giftcode")) {
+  case "gift":
+    downloadUrl("/files/пин конца (1).sprite3", "пин.sprite3");
+}
 </script>
