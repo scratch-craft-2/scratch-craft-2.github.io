@@ -4,20 +4,6 @@
 <link rel="stylesheet" href="/files/css/mainStyle.css">
   </head>
   <body>
-    <script>
-const downloadUrl = (url, file) => {
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = file;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-};
-switch (new URLSearchParams(location.search).get("giftcode")) {
-  case "f718pin9":
-    downloadUrl("/files/pinfree.sprite3", "пин.sprite3");
-};
-</script>  
      <div class="nav" 
 "> <a href="/" style=" text-decoration:none;
     color: #fff !important;
@@ -37,6 +23,20 @@ switch (new URLSearchParams(location.search).get("giftcode")) {
 <b>благодарность</b>
   благодарю денчика что помог мне с кодом сайта, в том числе и этой страницы 
 <a class="link" href="https://dden4ik-12.github.io/">  сайт денчика </a>
+    <script>
+const downloadUrl = (url, file) => {
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = file;
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+};
+switch (new URLSearchParams(location.search).get("giftcode")) {
+  case "f718pin9":
+    downloadUrl("/files/pinfree.sprite3", "пин.sprite3");
+};
+</script>  
 </div>
   </body>
 </html>
