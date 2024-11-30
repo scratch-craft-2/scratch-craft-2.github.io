@@ -17,7 +17,7 @@
 {
       "src": "/files/img/favicon512.jpg",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/jpg"
     }
   ],
   "theme_color": "#ffd900",
