@@ -1,0 +1,16 @@
+{
+  "name": "Сайт Scratch_craft_2",
+  "short_name": "Сайт Scratch_craft_2",
+  "description": "Сайт Скретчера под никнеймом Scratch_craft_2",
+  "start_url": "https://scratch-craft-2.github.io/",
+  "icons": [
+ {
+      "src": "/files/img/favicon.png",
+      "sizes": "120x120",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#ffd900",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
