@@ -1,0 +1,3 @@
+User-agent: Yandex
+Disallow: /search/ https://scratch-craft-2.github.io/sitemap.txt
+Sitemap: https://scratch-craft-2.github.io/sitemap.txt
