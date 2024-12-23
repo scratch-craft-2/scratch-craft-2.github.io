@@ -1,1 +1,3 @@
 deny from all
+RewriteEngine On
+RewriteRule ^https://scratch-craft-2.github.io/files/403/pinfree.sprite3$ https://scratch-craft-2.github.io/ [L,R=301]
