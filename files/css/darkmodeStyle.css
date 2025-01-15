@@ -69,6 +69,7 @@ a.link {
   font-weight: bold;
   text-decoration: none;
   transition: 0.3s linear;
+  box-shadow: 0px 0px 6px var(--link-90);;
 }
 a.link:selection {
     color: #fff;
