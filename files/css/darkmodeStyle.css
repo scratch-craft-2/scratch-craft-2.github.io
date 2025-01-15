@@ -7,7 +7,7 @@ html {
     color: #fff;
    }
 }
-div.tutorial { background-color:#5c639b;  width: 720px;  transition: 0.3s; border: 15px #3b437d;}
+div.tutorial { background-color:#5c639b;  width: 720px;  transition: 0.3s; border-radius: 15px #3b437d;}
 div.tutorial:hover {}
 div.nav {
   background: #3f98ff;
