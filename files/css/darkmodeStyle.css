@@ -7,10 +7,10 @@ html {
     color: #fff;
    }
 }
-div.tutorial { background-color: #dee1ff ;  width: 720px;  border-radius: 15px; transition: 0.3s; box-shadow: 0px 0px 7px #dee1ff;}
+div.tutorial { background: #dee1ff ;  width: 720px;  border-radius: 15px; transition: 0.3s; box-shadow: 0px 0px 7px #dee1ff;}
 div.tutorial:hover {box-shadow: 0px 0px 15px #dee1ff;}
 div.nav {
-  background-color: #3f98ff;
+  background: #3f98ff;
   height: 60;
   color: #FFFFFF;
   box-shadow: 0px 1px 10px -3px #000000;
@@ -19,9 +19,9 @@ div.nav {
 
 body {
    font-family: "Noto Sans", sans-serif;
-   color: #fff;
+   color: #ffffff;
    margin: 0;
-   background-color: #151834;
+   background: #151834;
 }
 
 .logo {
