@@ -20,6 +20,6 @@ setTimeout(document.location.href = "/инструменты" , 2000) ;
 switch (new URLSearchParams(location.search).get("gravity")) {
   case "true":
     document.createElement("script");
-    script.src="//gravityscript.github.io/grav.js"; 
+    script.src="gravityscript.github.io/grav.js"; 
     document.body.appendChild(script); 
     void(0);
