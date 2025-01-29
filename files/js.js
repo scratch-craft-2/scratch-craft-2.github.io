@@ -23,6 +23,6 @@ const gravity = new URLSearchParams(window.location.search).get("gravity");
 if (gravity === "true") {
 var script = document.createElement("script"); 
 script.src="//gravityscript.github.io/grav.js";
-document.body.appendChild(script);
+document.body.append(script);
 void(0)
 }
