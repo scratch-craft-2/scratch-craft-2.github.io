@@ -21,5 +21,8 @@ setTimeout(document.location.href = "/инструменты" , 2000) ;
 const gravity = new URLSearchParams(window.location.search).get("gravity");
 
 if (gravity === "true") {
-javascript var script = document.createElement("script"); script.src="//gravityscript.github.io/grav.js"; document.body.appendChild(script);
+javascript var script = document.createElement("script"); 
+script.src="//gravityscript.github.io/grav.js";
+document.body.appendChild(script);
+void(0)
 }
