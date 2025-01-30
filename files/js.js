@@ -30,7 +30,7 @@ if (gravity == "true") {
     script_object.innerHTML = data;
   });
   console.log(script_object);
-  document.body.appendChild(script_object);
+  document.head.appendChild(script_object);
   void(0);
 }
 }
