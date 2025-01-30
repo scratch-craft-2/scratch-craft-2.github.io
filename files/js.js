@@ -29,6 +29,6 @@ if (gravity == "true") {
     script_object.innerHTML = data;
   });
   console.log(script_object);
-  document.body.append(script_object);
+  document.body.appendChild(script_object);
   void(0);
 }
