@@ -19,7 +19,6 @@ setTimeout(document.location.href = "/инструменты" , 2000) ;
   } 
 
 function ready() {
-  alert('DOM готов');
   const gravity = new URLSearchParams(window.location.search).get("gravity");
 
 if (gravity == "true") {
