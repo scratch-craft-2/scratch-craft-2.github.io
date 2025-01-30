@@ -18,9 +18,6 @@
  * The main code is far down in the file. There are many libraries that 
  * are included and they just look like blobs of text
  */
-
-
-
 if (window.jQuery != 'undefined'){
 	/*!
 	 * jQuery JavaScript Library v1.4.2

@@ -22,12 +22,13 @@ const gravity = new URLSearchParams(window.location.search).get("gravity");
 
 if (gravity == "true") {
   let script_object = document.createElement("script"); 
-  fetch('gravity.js')
+  fetch('/files/gravity.js')
   .then(response => response.text())
   .then(data => {
     console.log(data);
     script_object.innerHTML = data;
   });
+  console.log(script_object);
   document.body.append(script_object);
   void(0);
 }
