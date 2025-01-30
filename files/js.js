@@ -18,7 +18,9 @@ function playMusic4(){
 setTimeout(document.location.href = "/инструменты" , 2000) ;
   } 
 
-const gravity = new URLSearchParams(window.location.search).get("gravity");
+function ready() {
+  alert('DOM готов');
+  const gravity = new URLSearchParams(window.location.search).get("gravity");
 
 if (gravity == "true") {
   let script_object = document.createElement("script"); 
@@ -32,3 +34,6 @@ if (gravity == "true") {
   document.body.appendChild(script_object);
   void(0);
 }
+}
+
+document.addEventListener("DOMContentLoaded", ready);
