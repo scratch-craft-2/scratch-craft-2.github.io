@@ -47,6 +47,15 @@ div.content {
   gap: 20px;
 }
 
+div.minibutt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    height: 20;
+    width: 500px;
+}
+
 div.content_group.image-and-text {
   display: flex;
   align-items: center;
