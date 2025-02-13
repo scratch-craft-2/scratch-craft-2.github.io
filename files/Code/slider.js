@@ -3,7 +3,7 @@
         const themeText = document.getElementById('theme-text');
         console.log(localStorage.getItem("theme"))
         if (localStorage.getItem("theme") == "dark") {
-                document.getElementById("theme-style-dark").setAttribute("href", "/static/css/darkmodeStyle.css");
+                document.getElementById("theme-style-dark").setAttribute("href", "/files/css/darkmodeStyle.css");
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
                 themeText.textContent = 'Тёмная тема';
@@ -21,7 +21,7 @@
             }
         themeToggle.addEventListener('change', function() {
             if (this.checked) {
-                document.getElementById("theme-style-dark").setAttribute("href", "/static/css/darkmodeStyle.css");
+                document.getElementById("theme-style-dark").setAttribute("href", "/files/css/darkmodeStyle.css");
                 body.classList.remove('light-theme');
                 body.classList.add('dark-theme');
                 themeText.textContent = 'Тёмная тема';
