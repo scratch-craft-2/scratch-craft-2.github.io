@@ -1,5 +1,5 @@
         const themeToggle = document.getElementById('theme-toggle');
-        const body = document.body;
+        const body = document.body; 
         const themeText = document.getElementById('theme-text');
         console.log(localStorage.getItem("theme"))
         if (localStorage.getItem("theme") == "dark") {
