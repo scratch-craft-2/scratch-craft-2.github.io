@@ -48,7 +48,7 @@
 
   
       <div class="content_group image-and-text left">   
-        <img src="/files/img/imglogo.svg" style="float:left;" >
+        <img id="image1"src="/files/img/imglogo.svg" style="float:left;" >
         <div>
           <div style="font-size: 50px;">Добро пожаловать!</div>
           <div>Это сайт Скретчера scratch_craft_2</div>
@@ -188,6 +188,11 @@
 <div class="content">
 Вопросы или проблемы на сайте? <a href="https://forms.yandex.ru/u/6754576602848f4b771de003/" class="link">нажмите сюда чтобы связатся</a>
 </div>
+<script>function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8; // Март имеет индекс 2, так как месяцы нумеруются от 0 } 
+function replaceImageIfMarch8th() { if (isMarch8th()) { const image = document.getElementById('image1'); image.src = 'files/img/imglogo8m.svg.jpg';} else { console.log('Сегодня не 8 марта.'); } } 
+// Вызов функции после загрузки страницы 
+window.onload = () => { replaceImageIfMarch8th(); };</script>
+
   </body>
 </html>
 
