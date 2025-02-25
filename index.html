@@ -189,9 +189,8 @@
 Вопросы или проблемы на сайте? <a href="https://forms.yandex.ru/u/6754576602848f4b771de003/" class="link">нажмите сюда чтобы связатся</a>
 </div>
 <script>
-function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8; // Март имеет индекс 2, так как месяцы нумеруются от 0 } 
+function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
 function replaceImageIfMarch8th() { if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'files/img/imglogo8m.svg.jpg';} else { console.log('Сегодня не 8 марта.'); } } 
-// Вызов функции после загрузки страницы 
 replaceImageIfMarch8th();
 </script>
 
