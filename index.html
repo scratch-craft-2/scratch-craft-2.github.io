@@ -190,10 +190,8 @@
 </div>
 <script>
 function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
-function replaceImageIfMarch8th() { if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg.jpg';} else { console.log('Сегодня не 8 марта.'); } } 
-replaceImageIfMarch8th();
+if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg.jpg';} else { console.log('Сегодня не 8 марта.'); }
 </script>
-
   </body>
 </html>
 
