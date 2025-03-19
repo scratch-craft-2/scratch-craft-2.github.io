@@ -24,6 +24,7 @@ body {
 }
 #image {
     transition: transform 1s ease-in-out; /* Анимация поворота с продолжительностью 1 секунда */
+    transform: rotate(0deg); 
 }
 .rotated {
     transform: rotate(360deg); 
