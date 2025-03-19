@@ -201,7 +201,10 @@ if (p == "true") {const randomColor = () => {
   document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 };
 randomColor();
-                 }</script>
+                 }
+document.getElementById('image1').addEventListener('click', function() {
+    this.classList.toggle('rotated'); // Добавляем/убираем класс rotated при клике
+});</script>
   </body>
 </html>
 
