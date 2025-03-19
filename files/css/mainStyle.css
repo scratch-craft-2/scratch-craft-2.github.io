@@ -22,7 +22,9 @@ body {
    color: hsl(225deg 15% 40%);
    margin: 0;
 }
-
+#image {
+    transition: transform 1s ease-in-out; /* Анимация поворота с продолжительностью 1 секунда */
+}
 .rotated {
     transform: rotate(360deg); 
 }
