@@ -34,14 +34,9 @@ const downloadUrl = (url, file) => {
   link.remove();
 };
 switch (new URLSearchParams(location.search).get("giftcode")) {
- /* case "f718pin9":
- downloadUrl("/files/pinfree.sprite3", "пин.sprite3");
- case "1icon3139":
-    downloadUrl("/files/403/костюм 1.svg", "новгодняяигконка.svg");
-case "f14f02f2025love":
-    downloadUrl("/files/img/Скретч-валентинка.svg", "Скретч-валентинка.svg");*/
 case "2025kleverprog1april":
     downloadUrl("/files/403/Клевер.svg", "Клевер программируй 2025 апрель.svg");
+    break
 default:
   alert("Нет подарка по введенному коду, проверьте правильность написание кода. возможно подарок был удален")
 };
