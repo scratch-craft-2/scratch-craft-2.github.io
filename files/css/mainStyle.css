@@ -23,6 +23,11 @@ body {
    margin: 0;
 }
 
+img.sizeconrol {
+    min-width: 303px;    /* Минимальный размер по ширине */
+    min-height: 299px;    /* Минимальный размер по высоте */
+} 
+
 div.content {
   display: flex;
   flex-direction: column;
