@@ -113,6 +113,10 @@ div.my {
   transition: 0.3s linear;
 }
 
+img.button {
+    transform: translateX(-5px) translateY(5px);
+}
+
 .button:hover {
   background: var(--button-hov-bg);
   color: var(--button-hov-text);
@@ -123,8 +127,7 @@ div.butt{
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
-  height: 20;
+  gap: 5px;
   width: 780px;
 }
 
