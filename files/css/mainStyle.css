@@ -24,8 +24,10 @@ body {
 }
 
 img.sizeconrol {
-    min-width: 303px;    /* Минимальный размер по ширине */
-    min-height: 299px;    /* Минимальный размер по высоте */
+    min-width: 303px;    
+    min-height: 299px;  
+    max-width: 321px;    
+    max-height: 317px;  
 } 
 
 div.content {
