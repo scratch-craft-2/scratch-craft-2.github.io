@@ -17,6 +17,11 @@ function playMusic4(){
   music.play();
 setTimeout(document.location.href = "/инструменты" , 2000) ;
   } 
+function playMusic5(){
+  var music = new Audio('/files/audio/click.wav');
+  music.play();
+setTimeout(document.location.href = "/courses" , 2000) ;
+  } 
 
 function ready() {
   const gravity = new URLSearchParams(window.location.search).get("gravity");
