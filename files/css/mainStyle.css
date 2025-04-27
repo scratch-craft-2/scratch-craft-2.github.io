@@ -23,6 +23,10 @@ body {
    margin: 0;
 }
 
+#frame { 
+width:80%;
+ height: 80%; }
+
 img.sizeconrol {
     min-width: 303px;    
     min-height: 299px;  
