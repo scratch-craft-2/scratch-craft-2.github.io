@@ -22,10 +22,7 @@ body {
    color: hsl(225deg 15% 40%);
    margin: 0;
 }
-
-frame { 
-width:80%;
- height: 80%; }
+  
 
 img.sizeconrol {
     min-width: 303px;    
