@@ -9,51 +9,53 @@ class Interpreter {
             'если': 'if',
         };
 
-        this.keywords = Object.keys(this.commands);
-    }
+         // Создаем глобальные функции
+ this.createGlobalFunctions();
+ }
 
-    // Преобразует фразу в JavaScript код
-    interpret(code) {
-        return code.split(' ').map(word => {
-            return this.commandsword || word;
-        }).join(' ');
-    }
+ // Создает глобальные функции для всех команд
+ createGlobalFunctions() {
+ for (let keyword in this.commands) {
+ windowkeyword = function(...args) {
+ const command = this.commandskeyword;
+ return eval(`${command}(${JSON.stringify(args)})`);
+ }.bind(this);
+ }
+ }
 
-    // Выполняет преобразованный код
-    execute(code) {
-        try {
-            eval(this.interpret(code));
-        } catch(e) {
-            console.error('Ошибка выполнения:', e.message);
-        }
-    }
+ // Добавляет новые команды в интерпретатор
+ addCommand(russian, javascript) {
+ this.commandsrussian = javascript;
+ windowrussian = function(...args) {
+ return eval(`${javascript}(${JSON.stringify(args)})`);
+ };
+ }
 
-    // Метод для замены console.log
-    replaceConsoleLog() {
-        const originalLog = console.log;
-        console.log = function(message) {
-            if (typeof message === 'string' && message.includes('.сообщение')) {
-                const interpreted = this.interpret(message);
-                eval(interpreted);
-            } else {
-                originalLog.apply(console, arguments);
-            }
-        }.bind(this);
-    }
+ // Обрабатывает весь код автоматически
+ interceptCode() {
+ const originalEval = window.eval;
+ window.eval = (code) => {
+ try {
+ return originalEval(this.interpret(code));
+ } catch(e) {
+ console.error('Ошибка выполнения:', e.message);
+ }
+ };
+ }
+
+ // Преобразует фразу в JavaScript код
+ interpret(code) {
+ return code.split(' ').map(word => {
+ return this.commandsword || word;
+ }).join(' ');
+ }
 }
 
-// Экспортируем глобальную функцию
-function initEasyScript() {
-    const interpreter = new Interpreter();
-    interpreter.replaceConsoleLog();
-    return interpreter;
-}
-
-// Экспортируем для использования в модульных системах
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = initEasyScript;
-}
-
+// Инициализация при загрузке страницы
+document.addEventListener('DOMContentLoaded', () => {
+ const interpreter = new Interpreter();
+ interpreter.interceptCode();
+});
 // Создаем глобальную переменную для простого использования
 if (typeof window !== 'undefined') {
     window.EasyScript = initEasyScript();
