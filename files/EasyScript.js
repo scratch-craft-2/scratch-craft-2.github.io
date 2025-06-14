@@ -38,3 +38,17 @@ class Interpreter {
 document.addEventListener('DOMContentLoaded', () => {
     const interpreter = new Interpreter();
 });
+
+// Для динамического добавления команд
+function addCommand(russian, javascript) {
+    Interpreter.prototype.commands[russian] = javascript;
+    window[russian] = function (...args) {
+        return eval(javascript.replace('russian', JSON.stringify(args)));
+    };
+}
+
+// Пример использования динамического добавления команды
+addCommand('новаяКоманда', 'console.info');
+
+// Использование новой команды
+новаяКоманда("Это сообщение с новой командой!");
