@@ -1,0 +1,77 @@
+<!DOCTYPE html> 
+<html> 
+  <head>
+<meta charset="utf-8">
+    <title>Записи | сайт scratch_craft_2</title> <!-- типа НОзвание стрОници-->
+    <link rel="shortcut icon" href="https://scratch-craft-2.github.io/files/img/favicon.png" type="image/png">
+    <link rel="icon" href="/files/img/favicon.png" type="image/png">
+    <link rel="stylesheet" href="/files/css/mainStyle.css">
+    <meta property="og:title" content="инструмены>
+    <meta property="og:site_name" content="сайт scratch_craft_2">
+    <meta property="og:url" content="https://scratch-craft-2.github.io/">
+    <meta property="og:description" content="сайт скретчера scratch_craft_2 - туториалы"> 
+    <meta property="og:image" content="https://scratch-craft-2.github.io/files/img/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap">
+<script>
+var purnum = "0" ;
+
+const button = document.getElementById('myButton');
+
+function handleButtonClick() {
+  var add = document.createElement("text")
+  purnum = purnum+1
+  add.id = purnum
+  var input = document.getElementById("input-id").value
+  add.innerText = "  "+input+"  "
+  var textbutton = document.createElement("button")
+  textbutton.innerText = "X"
+  textbutton.id = purnum
+  textbutton.addEventListener("click", deleting)
+  var i = document.getElementById("id")
+  i.appendChild(add)
+  i.appendChild(textbutton)
+  var br = document.createElement("br")
+  br.id = purnum
+  i.appendChild(br)
+}
+
+
+function deleting() {
+deletebyid(this.id)
+deletebyid(this.id)
+deletebyid(this.id)
+}
+
+function deletebyid(delid) {
+var i = document.getElementById("id")
+var child = document.getElementById(delid);
+i.removeChild(child)
+}
+</script>
+<style>
+button {
+    background-color: white;
+    width: auto;
+    border-radius: 8px;
+    height: 26PX;
+    font-size: 15px;
+    border-color: #ababab; 
+    cursor: pointer;
+}
+</style>
+  </head>
+  <body>
+  <div class="nav" 
+">
+      <a href="/" style=" text-decoration:none;
+    color: #fff !important;
+"><h1 style="
+    padding: 5px;
+    margin: 15px;
+">Сайт scratch_craft_2</h1></a>
+    </div>
+<input type="text" id="input-id"> 
+<button onclick="handleButtonClick()" id="myButton">добавить</button>
+<div id="id"> </div>
+</body>
+</html>
