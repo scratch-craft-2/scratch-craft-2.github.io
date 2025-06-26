@@ -58,6 +58,12 @@ button {
     border-color: #ababab; 
     cursor: pointer;
 }
+textarea {
+    resize: horizontal;      
+    max-width: 200px;      
+    width: 100px;           
+    min-height: 30px;         
+}
 </style>
   </head>
   <body>
@@ -70,8 +76,8 @@ button {
     margin: 15px;
 ">Сайт scratch_craft_2</h1></a>
     </div>
-<input type="text" id="input-id"> 
-<button onclick="handleButtonClick()" id="myButton">добавить</button>
+<div class=content>
+<textarea id="input-id">Я как воин дам griffpatch - hello fellow scratchers - i'm калач! </textarea> <button onclick="handleButtonClick()" id="myButton">добавить</button>
 <div id="id"> </div>
 </body>
 </html>
