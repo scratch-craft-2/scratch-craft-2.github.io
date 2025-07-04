@@ -17,6 +17,44 @@ div.nav {
   width: 100%;
 }
 
+@keyframes nav-pic_img_animation {
+    0%, 100% {
+        transform: rotateY(0deg);
+        transform-origin: calc(10% + 100px) 125px;
+        x: 10%;
+    }
+
+    40% {
+        transform: rotateY(0deg);
+        transform-origin: calc(90% - 100px) 125px;
+        x: calc(90% - 200px);
+    }
+
+    50% {
+        transform: rotateY(180deg);
+        transform-origin: calc(90% - 100px) 125px;
+        x: calc(90% - 200px);
+    }
+
+    90% {
+        transform: rotateY(180deg);
+        transform-origin: calc(10% + 100px) 125px;
+        x: 10%;
+    }
+}
+
+
+
+dashimage {
+    transform-origin: calc(10% + 100px) 125px;
+    animation: 8s infinite nav-pic_img_animation ease-in-out;
+    x: 10%;
+    y: 50;
+    width: 200px;
+    height: 200px;
+    filter: drop-shadow(25px 5px 15px #00000088);
+}
+
 body {
    font-family: "Noto Sans", sans-serif;
    color: hsl(225deg 15% 40%);
