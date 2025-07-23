@@ -27,6 +27,8 @@ div.tutorial {
     font-size: 30px
 }
 
+.textNorm {font-size: 12px;}
+
 
 div.tutorial:hover {
     box-shadow: 0px 0px 15px #575e75;
