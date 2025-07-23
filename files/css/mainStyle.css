@@ -27,7 +27,9 @@ div.tutorial {
     font-size: 30px
 }
 
-.textNorm {font-size: 12px;}
+.textNorm {
+font-size: 16px;
+}
 
 
 div.tutorial:hover {
