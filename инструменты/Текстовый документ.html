@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Продвинутый фоторедактор</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .editor-container {
+            border: 2px dashed #ccc;
+            padding: 20px;
+            margin: 20px 0;
+            position: relative;
+        }
+        #preview {
+            max-width: 100%;
+            display: none;
+        }
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .effect-controls {
+            border: 1px solid #ddd;
+            padding: 15px;
+        }
+        .active-effects {
+            margin-top: 20px;
+        }
+        .slider-container {
+            margin: 10px 0;
+        }
+        .slider-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="range"] {
+            width: 200px;
+        }
+        button {
+            padding: 8px 15px;
+            margin: 5px;
+            background: #2196F3;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1976D2;
+        }
+        .active-effect {
+            background: #4CAF50;
+            padding: 5px;
+            margin: 3px;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Продвинутый фоторедактор</h1>
+    
+    <div class="editor-container">
+        <input type="file" id="imageInput" accept="image/*">
+        <canvas id="preview"></canvas>
+    </div>
+
+    <div class="controls">
+        <div class="effect-controls">
+            <h3>Доступные эффекты:</h3>
+            <select id="effects">
+                <option value="none">Выберите эффект</option>
+                <option value="vintage">Винтаж</option>
+                <option value="lomo">Ломо</option>
+                <option value="pixelate">Пикселизация</option>
+                <option value="contrast">Контраст</option>
+                <option value="brightness">Яркость</option>
+                <option value="hue">Оттенок</option>
+                <option value="saturation">Насыщенность</option>
+            </select>
+
+            <div id="params" style="margin-top: 15px;">
+                <div class="slider-container" id="intensityControl" style="display: none;">
+                    <label class="slider-label">Сила эффекта: <span id="intensityValue">100</span>%</label>
+                    <input type="range" id="effectIntensity" min="0" max="100" value="100">
+                </div>
+                
+                <div class="slider-container" id="pixelateControl" style="display: none;">
+                    <label class="slider-label">Размер пикселей: <span id="pixelSizeValue">8</span></label>
+                    <input type="range" id="pixelSize" min="2" max="20" value="8">
+                </div>
+            </div>
+
+            <button onclick="addEffect()">Добавить эффект</button>
+        </div>
+
+        <div class="active-effects">
+            <h3>Активные эффекты:</h3>
+            <div id="activeEffectsList"></div>
+            <button onclick="applyAllEffects()">Применить все эффекты</button>
+            <button onclick="resetImage()">Сбросить всё</button>
+            <button onclick="downloadImage()">Скачать</button>
+        </div>
+    </div>
+    <script>
+        // Исправленная функция пикселизации
+        function pixelate(camanInstance, pixelSize) {
+            camanInstance.process("pixelate", function(rgba) {
+                const size = Math.max(2, pixelSize);
+                const x = Math.floor(this.x / size) * size;
+                const y = Math.floor(this.y / size) * size;
+                
+                const pixel = this.getPixel(x, y);
+                rgba.r = pixel.r;
+                rgba.g = pixel.g;
+                rgba.b = pixel.b;
+                return rgba;
+            });
+        }
+ const imageInput = document.getElementById('imageInput');
+ const preview = document.getElementById('preview');
+ const ctx = preview.getContext('2d');
+ let originalImage = null;
+ let activeEffects = [];
+
+ // Инициализация обработчиков событий
+ document.getElementById('effects').addEventListener('change', updateParamsVisibility);
+ document.getElementById('effectIntensity').addEventListener('input', updateIntensityValue);
+ document.getElementById('pixelSize').addEventListener('input', updatePixelSizeValue);
+
+ function updateIntensityValue() {
+ document.getElementById('intensityValue').textContent = this.value;
+ }
+
+ function updatePixelSizeValue() {
+ document.getElementById('pixelSizeValue').textContent = this.value;
+ }
+
+ function updateParamsVisibility() {
+ const effect = this.value;
+ document.getElementById('intensityControl').style.display = 
+ ['vintage', 'lomo'].includes(effect) ? 'block' : 'none';
+ document.getElementById('pixelateControl').style.display = 
+ effect === 'pixelate' ? 'block' : 'none';
+ }
+
+ function addEffect() {
+ const effect = document.getElementById('effects').value;
+ if (effect === 'none') return;
+
+ const effectConfig = {
+ name: effect,
+ intensity: effect === 'pixelate' ? 
+ parseInt(document.getElementById('pixelSize').value) :
+ parseInt(document.getElementById('effectIntensity').value)
+ };
+
+ activeEffects.push(effectConfig);
+ updateActiveEffectsList();
+ }
+
+ function updateActiveEffectsList() {
+ const list = document.getElementById('activeEffectsList');
+ list.innerHTML = activeEffects.map((eff, index) => `
+ <div class="active-effect">
+ ${eff.name} (${eff.intensity}${eff.name === 'pixelate' ? 'px' : '%'})
+ <button onclick="removeEffect(${index})">×</button>
+ </div>
+ `).join('');
+ }
+
+ function removeEffect(index) {
+ activeEffects.splice(index, 1);
+ updateActiveEffectsList();
+ applyAllEffects();
+ }
+
+ function applyAllEffects() {
+ if (!originalImage) {
+ alert('Сначала загрузите изображение!');
+ return;
+ }
+
+ Caman(preview, function() {
+ this.revert(false);
+ 
+ activeEffects.forEach(effect => {
+ switch(effect.name) {
+ case 'vintage':
+ this.vintage({ intensity: effect.intensity/100 });
+ break;
+ case 'lomo':
+ this.lomo({ intensity: effect.intensity/100 });
+ break;
+ case 'pixelate':
+ pixelate(this, effect.intensity);
+ break;
+ case 'contrast':
+ this.contrast(effect.intensity);
+ break;
+ case 'brightness':
+ this.brightness(effect.intensity);
+ break;
+ case 'hue':
+ this.hue(effect.intensity);
+ break;
+ case 'saturation':
+ this.saturation(effect.intensity);
+ break;
+ }
+ });
+ 
+ this.render();
+ });
+ }
+
+ function pixelate(camanInstance, pixelSize) {
+ const canvas = camanInstance.canvas;
+ const ctx = canvas.getContext('2d');
+ const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+ const tempCanvas = document.createElement('canvas');
+ const tempCtx = tempCanvas.getContext('2d');
+
+ // Уменьшаем изображение
+ tempCanvas.width = Math.ceil(canvas.width / pixelSize);
+ tempCanvas.height = Math.ceil(canvas.height / pixelSize);
+ tempCtx.drawImage(canvas, 0, 0, tempCanvas.width, tempCanvas.height);
+
+ // Увеличиваем обратно
+ ctx.imageSmoothingEnabled = false;
+ ctx.drawImage(tempCanvas, 0, 0, tempCanvas.width, tempCanvas.height, 
+ 0, 0, canvas.width, canvas.height);
+ }
+
+ imageInput.addEventListener('change', function(e) {
+ const reader = new FileReader();
+ reader.onload = function(event) {
+ const img = new Image();
+ img.onload = function() {
+ preview.width = img.width;
+ preview.height = img.height;
+ ctx.drawImage(img, 0, 0);
+ originalImage = img;
+ preview.style.display = 'block';
+ activeEffects = [];
+ updateActiveEffectsList();
+ }
+ img.src = event.target.result;
+ }
+ reader.readAsDataURL(e.target.files[0]);
+ });
+
+ function resetImage() {
+ ctx.drawImage(originalImage, 0, 0);
+ activeEffects = [];
+ updateActiveEffectsList();
+ }
+
+ function downloadImage() {
+ const link = document.createElement('a');
+ link.download = 'edited-image.png';
+ link.href = preview.toDataURL();
+ link.click();
+ }
+    </script>
+</body>
+</html>
