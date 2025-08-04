@@ -154,7 +154,7 @@
  function updateParamsVisibility() {
  const effect = this.value;
  document.getElementById('intensityControl').style.display = 
- ['vintage', 'lomo'].includes(effect) ? 'block' : 'none';
+ ['vintage', 'lomo', 'contrast','brightness','hue','saturation'].includes(effect) ? 'block' : 'none';
  document.getElementById('pixelateControl').style.display = 
  effect === 'pixelate' ? 'block' : 'none';
  }
@@ -281,5 +281,6 @@
 </body>
 
 </html>
+
 
 
