@@ -370,7 +370,6 @@ div.help {
           font-size: 25px;
           border-bottom: 2px solid var(--ui-main-70);
           border-radius: 10px;
-          padding: 13px;
         font-weight: normal;
           text-decoration: none;
           transition: 0.3s linear;
@@ -386,6 +385,7 @@ div.help {
     --button-hov-border: #878686; }
 
         div.content_group.contributors-list > .button.contributor-type1 > img {
+     padding: 13px;
       width: 50px;
       height: 50px;
       border-radius: 8px;
