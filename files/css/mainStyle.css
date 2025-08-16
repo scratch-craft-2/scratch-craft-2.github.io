@@ -373,7 +373,7 @@ div.help {
         font-weight: normal;
           text-decoration: none;
           transition: 0.3s linear;
-         padding: 25px;
+         padding: 20px;
     }
     .button:hover {
           background: var(--button-hov-bg)!important;
@@ -386,8 +386,8 @@ div.help {
     --button-hov-border: #878686; }
 
         div.content_group.contributors-list > .button.contributor-type1 > img {
-      width: 50px;
-      height: 50px;
+      width: 40px;
+      height: 40px;
       border-radius: 8px;
 }
 
