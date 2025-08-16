@@ -56,13 +56,13 @@ div.tutorial:hover {
 
 div.nav {
     background-color: #3f98ff;
+    background-image: url(https://tochka-school.ru/themes/school-point/assets/img/discount-august/bg.png)
     height: 60px;
     color: #FFFFFF;
     box-shadow: 0px 1px 10px -3px #000000;
-    width: width: calc(100% - 40px);
+    width: calc(100% - 40px);
     display: flex;
     align-items: center;
-    /* Выравнивание по вертикали */
     justify-content: center;
     padding: 0 20px;
 }
