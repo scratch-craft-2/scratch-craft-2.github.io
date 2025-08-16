@@ -56,7 +56,7 @@ div.tutorial:hover {
 
 div.nav {
     background-color: #3f98ff;
-    background-image: url(https://tochka-school.ru/themes/school-point/assets/img/discount-august/bg.png)
+    background-image: url("https://tochka-school.ru/themes/school-point/assets/img/discount-august/bg.png");
     height: 60px;
     color: #FFFFFF;
     box-shadow: 0px 1px 10px -3px #000000;
