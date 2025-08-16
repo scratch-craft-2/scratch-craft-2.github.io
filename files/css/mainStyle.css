@@ -42,15 +42,14 @@ html {
           border-bottom-color: var(--button-hov-border)!important;
     }
 
-    div.content_group.contributors-list > .button.contributor-type1
- {
+    div.content_group.contributors-list > .button.contributor-type1 {
     --button-hov-bg: #cccccc;
     --button-hov-border: #878686; }
 
         div.content_group.contributors-list > .button.contributor-type1 > img {
-width: 50px;
-height: 50px;
-border-radius: 8px;
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
 }
 
 div.tutorial {
