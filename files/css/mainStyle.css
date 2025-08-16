@@ -1,13 +1,30 @@
-html {
-    --link-50: hsl(30deg 100% 50%);
-    --link-90: hsl(30deg 100% 90%);
-    ::selection {
-        background: #ff5e6b;
-        border-radius: 10px;
-        color: #fff;
-    }
+ html {
+  --looks-main-20: hsl(51deg 100% 20%);
+  --looks-main-30: hsl(51deg 100% 30%);
+  --looks-main-40: hsl(51deg 100% 40%);
+  --looks-main-50: hsl(51deg 100% 50%);
+  --looks-main-60: hsl(51deg 100% 60%);
+  --looks-main-70: hsl(51deg 100% 70%);
+  --looks-main-80: hsl(51deg 100% 80%);
+  --looks-main-90: hsl(51deg 100% 90%);
+  --looks-bg: white;
+  --ui-main-20: hsl(0deg 0% 20%);
+  --ui-main-30: hsl(0deg 0% 30%);
+  --ui-main-40: hsl(0deg 0% 40%);
+  --ui-main-50: hsl(0deg 0% 50%);
+  --ui-main-60: hsl(0deg 0% 60%);
+  --ui-main-70: hsl(0deg 0% 70%);
+  --ui-main-80: hsl(0deg 0% 80%);
+  --ui-main-90: hsl(0deg 0% 90%);
+  --link-50: hsl(30deg 100% 50%);
+  --link-90: hsl(30deg 100% 90%);
+  --text: hsl(225deg 15% 40%);
+        ::selection { 
+            background: #ff5e6b; 
+            border-radius: 10px;
+            color: #fff;
+   }
 }
-
     div.content_group.contributors-list {
         display: flex;
         align-items: center;
