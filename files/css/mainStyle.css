@@ -25,50 +25,7 @@
             color: #fff;
    }
 }
-    div.content_group.contributors-list {
-        display: flex;
-        align-items: center;
-        gap: 20px;
-        background-color:  #fff;
-        border: 3.5px solid #575e75;
-        border-radius: 10px;
-        padding: 20px;
-        width: min(calc(100% - 40px), 700px);
-        flex-direction: row; 
-    }
-
-    .button {
-      display: flex;
-       flex-direction: column;
-       justify-content: center;
-       align-items: center;
-      gap: 20px;
-        background: var(--ui-main-90);
-          color: var(--text);
-          font-size: 25px;
-          border-bottom: 2px solid var(--ui-main-70);
-          border-radius: 10px;
-          padding: 13px;
-        font-weight: normal;
-          text-decoration: none;
-          transition: 0.3s linear;
-    }
-    .button:hover {
-          background: var(--button-hov-bg)!important;
-          color: var(--button-hov-text)!important;
-          border-bottom-color: var(--button-hov-border)!important;
-    }
-
-    div.content_group.contributors-list > .button.contributor-type1 {
-    --button-hov-bg: #cccccc;
-    --button-hov-border: #878686; }
-
-        div.content_group.contributors-list > .button.contributor-type1 > img {
-      width: 50px;
-      height: 50px;
-      border-radius: 8px;
-}
-
+   
 div.tutorial {
     border-color: #575e75;
     border-width: 3.3px;
@@ -388,3 +345,49 @@ div.help {
     border-radius: 15px;
     box-shadow: 0px 0px 7px #575e75;
 }
+
+
+ div.content_group.contributors-list {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        background-color:  #fff;
+        border: 3.5px solid #575e75;
+        border-radius: 10px;
+        padding: 20px;
+        width: min(calc(100% - 40px), 700px);
+        flex-direction: row; 
+    }
+
+    .button {
+      display: flex;
+       flex-direction: column;
+       justify-content: center;
+       align-items: center;
+      gap: 20px;
+        background: var(--ui-main-90);
+          color: var(--text);
+          font-size: 25px;
+          border-bottom: 2px solid var(--ui-main-70);
+          border-radius: 10px;
+          padding: 13px;
+        font-weight: normal;
+          text-decoration: none;
+          transition: 0.3s linear;
+    }
+    .button:hover {
+          background: var(--button-hov-bg)!important;
+          color: var(--button-hov-text)!important;
+          border-bottom-color: var(--button-hov-border)!important;
+    }
+
+    div.content_group.contributors-list > .button.contributor-type1 {
+    --button-hov-bg: #cccccc;
+    --button-hov-border: #878686; }
+
+        div.content_group.contributors-list > .button.contributor-type1 > img {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+}
+
