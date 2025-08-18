@@ -133,15 +133,6 @@ div.content-warp {
     padding: 20px;
 }
 
-div.minibutt {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    border-radius: 10px;
-    background-color: #e4e4e4;
-    color: #2d2d2d;
-}
 
 div.content_group.image-and-text {
     display: flex;
@@ -196,100 +187,6 @@ a.link:hover {
     color: #ffffff;
 }
 
-div.my {
-    border-radius: 10px;
-    background-color: #e4e4e4;
-    color: #2d2d2d;
-}
-
-.button {
-    background: var(--ui-main-90);
-    color: var(--text);
-    font-size: 25px;
-    border-bottom: 2px solid var(--ui-main-70);
-    border-radius: 10px;
-    padding: 20px;
-    font-weight: normal;
-    text-decoration: none;
-    height: 20px ;
-    width: 20px;
-    transition: 0.3s linear;
-    justify-content: center; /* Центрирование при наведении */
-}
-
-button > img {
-    transform: translateX(-5px) translateY(5px);
-}
-
-.button:hover {
-    background: var(--button-hov-bg);
-    color: var(--button-hov-text);
-    border-bottom-color: var(--button-hov-border);
-}
-
-div.butt {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 5px;
-    width: 780px;
-}
-
-button.yt {
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #ff5858;
-    color: #FFFFFF;
-    font-size: 20px;
-    transition: 0.3s;
-}
-
-button.yt:hover {
-    width: 340px;
-}
-
-button.rutube {
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #001737;
-    color: #FFFFFF;
-    font-size: 20px;
-    transition: 0.3s;
-}
-
-button.rutube:hover {
-    width: 340px;
-}
-
-button.vk {
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #0077ff;
-    color: #FFFFFF;
-    font-size: 20px;
-    transition: 0.3s;
-}
-
-button.vk:hover {
-    width: 340px;
-}
-
-button.dzen {
-    width: 300px;
-    height: 40px;
-    border-radius: 10px;
-    background-color: #000000;
-    color: #FFFFFF;
-    font-size: 20px;
-    transition: 0.3s;
-}
-
-button.dzen:hover {
-    width: 340px;
-}
 
 [data-title] {
     position: relative;
