@@ -37,7 +37,7 @@ const downloadUrl = (url, file) => {
 switch (new URLSearchParams(location.search).get("giftcode")) {
 case "ymnikisSunny31avgyst":
      function is31avgth() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 31;} 
-    if (isMarch8th()) { downloadUrl("/files/403/Умникис солнца.svg", "Солничный умникис - с днем конца лета.svg")} else {alert("Данный подарок доступен к получению только в определенный день года")};
+    if (is31avgth()) { downloadUrl("/files/403/Умникис солнца.svg", "Солничный умникис - с днем конца лета.svg")} else {alert("Данный подарок доступен к получению только в определенный день года")};
       break
 case "meme1":
     downloadUrl("/files/403/Шаблон_для_мема__скретч_по_уровням_.svg", "Клевер программируй 2025 апрель.svg");
