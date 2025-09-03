@@ -138,8 +138,10 @@
 <script>
 function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
 function isMarch14th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 14;} 
+function isAug6th() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 6;} 
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
+if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
 const p = new URLSearchParams(window.location.search).get("Pashalka");
 
 if (p == "true") {const randomColor = () => {
