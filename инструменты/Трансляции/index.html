@@ -218,7 +218,8 @@ async function startStreaming() {
 function stopStreaming() {
     Object.values(rtcPeerConnections).forEach(connection => {
         connection.close();
-    }); rtcPeerConnections = {};
+    });
+rtcPeerConnections = {};
 document.getElementById('start-streaming').disabled = false;
 document.getElementById('stop-streaming').disabled = true;
 }
