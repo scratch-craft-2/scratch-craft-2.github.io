@@ -24,6 +24,13 @@
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
+.settings {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .streaming-settings {
     margin: 20px 0;
     display: flex;
@@ -52,7 +59,19 @@ button {
     </div>
     </div>
 </header>
-    <div class="container">
+   <div class="container">
+        <h1>Запись экрана</h1>
+        <div class="settings">
+            <div>
+                <input type="checkbox" id="use-webcam" checked>
+                <label for="use-webcam">Использовать веб-камеру</label>
+            </div>
+            <div>
+                <input type="checkbox" id="use-microphone" checked>
+                <label for="use-microphone">Использовать микрофон</label>
+            </div>
+        </div>
+        
         <button id="start-recording">Начать запись</button>
         <button id="stop-recording" disabled>Остановить запись</button>
         <div id="status"></div>
@@ -80,19 +99,55 @@ button {
 <script>let mediaRecorder;
 let recordedChunks = [];
 let stream;
+let rtcPeerConnections = {};
 
 async function startRecording() {
     try {
-        const displayMediaOptions = {
+        const webcam = document.getElementById('use-webcam').checked;
+        const microphone = document.getElementById('use-microphone').checked;
+        
+        // Формируем ограничения для захвата медиа
+        const constraints = {
             video: {
                 cursor: 'always',
                 displaySurface: true,
                 logicalSurface: true
             },
-            audio: true
+            audio: microphone
         };
-
-        stream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+        
+        // Добавляем параметры для веб-камеры
+        if (webcam) {
+            constraints.video = {
+                ...constraints.video,
+                facingMode: { exact: 'user' },
+                width: { ideal: 1280 },
+                height: { ideal: 720 }
+            };
+        }
+        
+        // Получаем поток
+        stream = await navigator.mediaDevices.getDisplayMedia(constraints);
+        
+        // Если включена веб-камера, добавляем её поток
+        if (webcam) {
+            const webcamStream = await navigator.mediaDevices.getUserMedia({
+                video: {
+                    facingMode: 'user',
+                    width: { ideal: 1280 },
+                    height: { ideal: 720 }
+                },
+                audio: microphone
+            });
+            
+            // Объединяем потоки
+            stream = new MediaStream([
+                ...stream.getVideoTracks(),
+                ...webcamStream.getVideoTracks(),
+                ...stream.getAudioTracks()
+            ]);
+        }
+        
         mediaRecorder = new MediaRecorder(stream);
 
         document.getElementById('start-recording').disabled = true;
@@ -112,14 +167,20 @@ async function startRecording() {
         mediaRecorder.start();
     } catch (error) {
         console.error('Ошибка при записи:', error);
+        alert('Произошла ошибка при инициализации записи: ' + error.message);
     }
 }
 
 function stopRecording() {
-    mediaRecorder.stop();
-    stream.getTracks().forEach(track => track.stop());
+    if (mediaRecorder) {
+        mediaRecorder.stop();
+    }
+    if (stream) {
+        stream.getTracks().forEach(track => track.stop());
+    }
     document.getElementById('start-recording').disabled = false;
     document.getElementById('stop-recording').disabled = true;
+    document.getElementById('status').innerText = 'Запись остановлена';
 }
 
 function downloadBlob(blob) {
@@ -127,7 +188,7 @@ function downloadBlob(blob) {
     const a = document.createElement('a');
     a.style.display = 'none';
     a.href = url;
-    a.download = 'recording.mp4';
+    a.download = 'recording_' + new Date().toISOString().replace(/[:]/g, '-') + '.mp4';
     document.body.appendChild(a);
     a.click();
     setTimeout(() => {
@@ -136,7 +197,105 @@ function downloadBlob(blob) {
     }, 100);
 }
 
+async function startStreaming() {
+    const youtubeKey = document.getElementById('youtube-key').value;
+    const twitchKey = document.getElementById('twitch-key').value;
+    const telegramBot = document.getElementById('telegram-bot').value;
+    const telegramChat = document.getElementById('telegram-chat').value;
+
+    if (!stream) {
+        alert('Сначала начните запись экрана');
+        return;
+    }
+
+    // YouTube
+    if (youtubeKey) {
+        await createRTCConnection('youtube', youtubeKey);
+    }
+
+    // Twitch
+    if (twitchKey) {
+        await createRTCConnection('twitch', twitchKey);
+    }
+
+    // Telegram
+    if (telegramBot && telegramChat) {
+        await createTelegramStream(telegramBot, telegramChat);
+    }
+}
+
+function stopStreaming() {
+    Object.values(rtcPeerConnections).forEach(connection => {
+        connection.close();
+    }); rtcPeerConnections = {};
+document.getElementById('start-streaming').disabled = false;
+document.getElementById('stop-streaming').disabled = true;
+}
+
+async function createRTCConnection(platform, key) {
+ try {
+ const serverUrl = {
+ youtube: 'rtmp://a.rtmp.youtube.com/live2',
+ twitch: 'rtmp://live-api.freetls.fastly.com/app/'
+ }[platform];
+
+ const rtcPeerConnection = new RTCPeerConnection();
+ rtcPeerConnections[platform] = rtcPeerConnection;
+
+ stream.getTracks().forEach(track => rtcPeerConnection.addTrack(track, stream));
+
+ await rtcPeerConnection.setRemoteDescription(new RTCSessionDescription({
+ type: 'offer',
+ sdp: `v=0\r\no=- 0 0 IN TCP\r\ns=-\r\nt=0 0\r\nm=video 0 RTP/AVP 96\r\na=rtpmap:96 H264/90000\r\n`
+ }));
+
+ rtcPeerConnection.onicecandidate = async event => {
+ if (event.candidate) {
+ await rtcPeerConnection.addIceCandidate(event.candidate);
+ } else {
+ const offer = await rtcPeerConnection.createOffer();
+ await rtcPeerConnection.setLocalDescription(offer);
+
+ const socket = new WebSocket(`${serverUrl}/${key}`);
+ socket.onopen = () => {
+ socket.send(rtcPeerConnection.localDescription.sdp);
+ };
+ }
+ };
+ } catch (error) {
+ console.error('Ошибка при создании RTC соединения:', error);
+ alert('Произошла ошибка при инициализации трансляции: ' + error.message);
+ }
+}
+
+async function createTelegramStream(botToken, chatId) {
+ try {
+ const video = document.createElement('video');
+ video.srcObject = stream;
+ video.play();
+
+ const canvas = document.createElement('canvas');
+ canvas.width = video.videoWidth;
+ canvas.height = video.videoHeight;
+
+ setInterval(() => {
+ canvas.getContext('2d').drawImage(video, 0, 0);
+ const dataURL = canvas.toDataURL('image/jpeg');
+ fetch(`https://api.telegram.org/bot${botToken}/sendVideo`, {
+ method: 'POST',
+ body: new FormData().append('chat_id', chatId).append('video', dataURL)
+ });
+ }, 1000);
+ } catch (error) {
+ console.error('Ошибка при создании Telegram потока:', error);
+ alert('Произошла ошибка при инициализации трансляции в Telegram: ' + error.message);
+ }
+}
+
 document.getElementById('start-recording').addEventListener('click', startRecording);
-document.getElementById('stop-recording').addEventListener('click', stopRecording);</script>
+document.getElementById('stop-recording').addEventListener('click', stopRecording);
+document.getElementById('start-streaming').addEventListener('click', startStreaming);
+document.getElementById('stop-streaming').addEventListener('click', stopStreaming);
+</script>
 </body>
 </html>
