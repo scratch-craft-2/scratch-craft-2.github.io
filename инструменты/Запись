@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <link rel="manifest" href="/manifest.webmanifest">
+    <title>Трансляции и запись | сайт scratch_craft_2</title>
+    <link rel="shortcut icon" href="https://scratch-craft-2.github.io/files/img/favicon.png" type="image/png">
+    <link rel="icon" href="/files/img/favicon.png" type="image/png">
+    <link id="theme-style" rel="stylesheet" href="/files/css/mainStyle.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap">
+    <meta property="og:title" content="Запись экрана и трансляции">
+    <meta property="og:site_name" content="сайт scratch_craft_2">
+    <meta property="og:url" content="https://scratch-craft-2.github.io/">
+    <meta property="og:description" content="сайт скретчера scratch_craft_2 - Запись экрана">
+    <meta property="og:image" content="https://scratch-craft-2.github.io/files/img/favicon.png">
+    <meta name="description" content="сайт scratch_craft_2 - музыка для проектов, туториалы по скретчу и многое другое!"/>
+    <style>body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    text-align: center;
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.streaming-settings {
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.streaming-settings label {
+    margin: 10px 0;
+}
+
+button {
+    margin: 10px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+<header>  <div class="nav"> <a href="/" style=" text-decoration:none;
+    color: #fff !important;
+"><b style="
+    font-size: 32px;
+    padding: 5px;
+    margin: 15px;
+">Сайт scratch_craft_2</b></a>
+    </div>
+    </div>
+</header>
+    <div class="container">
+        <button id="start-recording">Начать запись</button>
+        <button id="stop-recording" disabled>Остановить запись</button>
+        <div id="status"></div>
+        
+        <h2>Настройки трансляции</h2>
+        <div class="streaming-settings">
+            <label>
+                YouTube:
+                <input type="text" id="youtube-key" placeholder="Ключ потока YouTube">
+            </label>
+            <label>
+                Twitch:
+                <input type="text" id="twitch-key" placeholder="Ключ потока Twitch">
+            </label>
+            <label>
+                Telegram:
+                <input type="text" id="telegram-bot" placeholder="Токен бота Telegram">
+                <input type="text" id="telegram-chat" placeholder="ID чата Telegram">
+            </label>
+        </div>
+        
+        <button id="start-streaming">Начать трансляцию</button>
+        <button id="stop-streaming" disabled>Остановить трансляцию</button>
+    </div>
+<script>let mediaRecorder;
+let recordedChunks = [];
+let stream;
+
+async function startRecording() {
+    try {
+        const displayMediaOptions = {
+            video: {
+                cursor: 'always',
+                displaySurface: true,
+                logicalSurface: true
+            },
+            audio: true
+        };
+
+        stream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
+        mediaRecorder = new MediaRecorder(stream);
+
+        document.getElementById('start-recording').disabled = true;
+        document.getElementById('stop-recording').disabled = false;
+        document.getElementById('status').innerText = 'Запись началась...';
+
+        mediaRecorder.ondataavailable = (event) => {
+            recordedChunks.push(event.data);
+        };
+
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(recordedChunks, { type: 'video/mp4' });
+            recordedChunks = [];
+            downloadBlob(blob);
+        };
+
+        mediaRecorder.start();
+    } catch (error) {
+        console.error('Ошибка при записи:', error);
+    }
+}
+
+function stopRecording() {
+    mediaRecorder.stop();
+    stream.getTracks().forEach(track => track.stop());
+    document.getElementById('start-recording').disabled = false;
+    document.getElementById('stop-recording').disabled = true;
+}
+
+function downloadBlob(blob) {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = 'recording.mp4';
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => {
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    }, 100);
+}
+
+document.getElementById('start-recording').addEventListener('click', startRecording);
+document.getElementById('stop-recording').addEventListener('click', stopRecording);</script>
+</body>
+</html>
