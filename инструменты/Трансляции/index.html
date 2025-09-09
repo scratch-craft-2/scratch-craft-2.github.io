@@ -96,7 +96,26 @@ button {
         <button id="start-streaming">Начать трансляцию</button>
         <button id="stop-streaming" disabled>Остановить трансляцию</button>
     </div>
-<script>let mediaRecorder;
+<script>
+// Запрос доступа к камере и микрофону
+navigator.mediaDevices.getUserMedia({
+    audio: true,    // запрашиваем доступ к микрофону
+    video: true     // запрашиваем доступ к камере
+})
+.then(stream => {
+    // Если доступ разрешен
+    console.log('Доступ получен!');
+    
+    // Пример отображения видео
+    const videoElement = document.querySelector('video');
+    videoElement.srcObject = stream;
+    videoElement.autoplay = true;
+})
+.catch(error => {
+    // Если доступ запрещен
+    console.error('Ошибка доступа:', error);
+});
+let mediaRecorder;
 let recordedChunks = [];
 let stream;
 let rtcPeerConnections = {};
