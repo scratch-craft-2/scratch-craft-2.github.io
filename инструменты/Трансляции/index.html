@@ -61,16 +61,6 @@ button {
 </header>
    <div class="container">
         <h1>Запись экрана</h1>
-        <div class="settings">
-            <div>
-                <input type="checkbox" id="use-webcam" checked>
-                <label for="use-webcam">Использовать веб-камеру</label>
-            </div>
-            <div>
-                <input type="checkbox" id="use-microphone" checked>
-                <label for="use-microphone">Использовать микрофон</label>
-            </div>
-        </div>
         
         <button id="start-recording">Начать запись</button>
         <button id="stop-recording" disabled>Остановить запись</button>
@@ -97,24 +87,6 @@ button {
         <button id="stop-streaming" disabled>Остановить трансляцию</button>
     </div>
 <script>
-// Запрос доступа к камере и микрофону
-navigator.mediaDevices.getUserMedia({
-    audio: true,    // запрашиваем доступ к микрофону
-    video: true     // запрашиваем доступ к камере
-})
-.then(stream => {
-    // Если доступ разрешен
-    console.log('Доступ получен!');
-    
-    // Пример отображения видео
-    const videoElement = document.querySelector('video');
-    videoElement.srcObject = stream;
-    videoElement.autoplay = true;
-})
-.catch(error => {
-    // Если доступ запрещен
-    console.error('Ошибка доступа:', error);
-});
 let mediaRecorder;
 let recordedChunks = [];
 let stream;
