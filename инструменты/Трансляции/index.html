@@ -16,31 +16,44 @@
     <meta property="og:image" content="https://scratch-craft-2.github.io/files/img/favicon.png">
     <meta name="description" content="сайт scratch_craft_2 - музыка для проектов, туториалы по скретчу и многое другое!"/>
     <style>
-
-.container {
-    text-align: center;
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.streaming-settings {
-    margin: 20px 0;
-    display: flex;
-    flex-direction: column;
-}
-
-.streaming-settings label {
-    margin: 10px 0;
-}
-
-button {
-    margin: 10px;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-</style>
+        #controls {
+            padding: 20px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 999;
+        }
+        .recording-info {
+            margin-bottom: 10px;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: #f0f0f0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+        .progress {
+            height: 100%;
+            background: green;
+            width: 0;
+            transition: width 0.2s;
+        }
+        .preview {
+            width: 300px;
+            height: 200px;
+            margin: 20px;
+        }
+        button {
+            margin: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <header>  <div class="nav"> <a href="/" style=" text-decoration:none;
@@ -53,185 +66,152 @@ button {
     </div>
     </div>
 </header>
-   <div class="container">
-       <div class="container">
-        <h1>Запись экрана</h1>
-        <button id="start-recording">Начать запись</button>
-        <button id="stop-recording" disabled>Остановить запись</button>
-        <div id="status"></div>
-        
-        <h2>Настройки трансляции</h2>
-        <div class="streaming-settings">
-            <label>
-                YouTube:
-                <input type="text" id="youtube-key" placeholder="Ключ потока YouTube">
-            </label>
-            <label>
-                Twitch:
-                <input type="text" id="twitch-key" placeholder="Ключ потока Twitch">
-            </label>
-            <label>
-                Telegram:
-                <input type="text" id="telegram-bot" placeholder="Токен бота Telegram">
-                <input type="text" id="telegram-chat" placeholder="ID чата Telegram">
-            </label>
+ <div id="controls">
+        <div class="recording-info">
+            <span id="timer">00:00</span>
+            <div class="progress-bar">
+                <div class="progress"></div>
+            </div>
         </div>
-        
-        <button id="start-streaming">Начать трансляцию</button>
-        <button id="stop-streaming" disabled>Остановить трансляцию</button>
+        <button id="start">Начать запись</button>
+        <button id="stop" disabled>Остановить запись</button>
+        <div class="preview">
+            <video id="preview" autoplay playsinline></video>
+        </div>
     </div>
 <script>
 let mediaRecorder;
-let recordedChunks = [];
-let stream;
-let rtcPeerConnections = {};
+let chunks = [];
+let recordingStartTime;
+let timerInterval;
+let progressBar = document.querySelector('.progress');
 
-async function startRecording() {
+// Получение разрешений
+async function getMedia() {
     try {
-        const displayMediaOptions = {
-            video: {
-                cursor: 'always',
-                displaySurface: true,
-                logicalSurface: true
-            },
+        const stream = await navigator.mediaDevices.getDisplayMedia({
+            video: { cursor: 'always' },
             audio: true
-        };
-
-        stream = await navigator.mediaDevices.getDisplayMedia(displayMediaOptions);
-        mediaRecorder = new MediaRecorder(stream);
-
-        document.getElementById('start-recording').disabled = true;
-        document.getElementById('stop-recording').disabled = false;
-        document.getElementById('status').innerText = 'Запись началась...';
-
-        mediaRecorder.ondataavailable = (event) => {
-            recordedChunks.push(event.data);
-        };
-
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(recordedChunks, { type: 'video/mp4' });
-            recordedChunks = [];
-            downloadBlob(blob);
-        };
-
-        mediaRecorder.start();
-    } catch (error) {
-        console.error('Ошибка при записи:', error);
-    }
-}
-
-async function startStreaming() {
-    const youtubeKey = document.getElementById('youtube-key').value;
-    const twitchKey = document.getElementById('twitch-key').value;
-    const telegramBot = document.getElementById('telegram-bot').value;
-    const telegramChat = document.getElementById('telegram-chat').value;
-
-    if (!stream) {
-        alert('Сначала начните запись экрана');
-        return;
-    }
-
-    // YouTube
-    if (youtubeKey) {
-        await createRTCConnection('youtube', youtubeKey);
-    }
-if (youtubeKey) {
-    try {
-        const youtubeStream = await createStreamConnection({
-            platform: 'youtube',
-            key: youtubeKey,
-            stream: combinedStream
         });
-        rtcPeerConnections['youtube'] = youtubeStream;
-    } catch (error) {
-        console.error('Ошибка подключения к YouTube:', error);
-    }
-}
-
-// Twitch
-if (twitchKey) {
-    try {
-        const twitchStream = await createStreamConnection({
-            platform: 'twitch',
-            key: twitchKey,
-            stream: combinedStream
+        
+        const micStream = await navigator.mediaDevices.getUserMedia({
+            audio: true
         });
-        rtcPeerConnections['twitch'] = twitchStream;
+
+        // Объединение потоков
+        const finalStream = new MediaStream(
+            ...stream.getTracks(),
+            ...micStream.getTracks()
+        );
+
+        // Добавление предварительного просмотра
+        const preview = document.getElementById('preview');
+        preview.srcObject = finalStream;
+
+        mediaRecorder = new MediaRecorder(finalStream);
+        mediaRecorder.ondataavailable = handleDataAvailable;
+        mediaRecorder.onstop = handleStop;
+        mediaRecorder.onerror = handleError;
     } catch (error) {
-        console.error('Ошибка подключения к Twitch:', error);
+        console.error('Ошибка получения медиа:', error);
+        alert('Не удалось получить доступ к экрану или микрофону');
     }
 }
 
-// Telegram
-if (telegramBot && telegramChat) {
-    try {
-        await startTelegramStreaming(telegramBot, telegramChat);
-    } catch (error) {
-        console.error('Ошибка подключения к Telegram:', error);
+// Обработка фрагментов
+function handleDataAvailable(event) {
+    if (event.data.size > 0) {
+        chunks.push(event.data);
+        updateProgressBar();
     }
 }
 
-async function createStreamConnection({ platform, key, stream }) {
-    const rtcPeerConnection = new RTCPeerConnection({
-        iceServers: [
-            { urls: 'stun:stun.l.google.com:19302' }
-        ]
-    });
+// Сохранение записи
+function handleStop(event) {
+    clearInterval(timerInterval);
+    const blob = new Blob(chunks, { type: 'video/mp4' });
+    chunks = [];
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.style.display = 'none';
+    a.href = url;
+    a.download = `запись-экрана-${new Date().toISOString().replace(/[:.-]/g, '')}.mp4`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    resetUI();
+}
 
-    stream.getTracks().forEach(track => rtcPeerConnection.addTrack(track, stream));
+// Обработка ошибок
+function handleError(error) {
+    console.error('Произошла ошибка записи:', error);
+    alert('Ошибка при записи экрана: ' + error.name);
+    resetUI();
+}
 
-    const serverUrls = {
-        youtube: `rtmp://a.rtmp.youtube.com/live2`,
-        twitch: `rtmp://live-api.freetls.fastly.com/app`
-    };
-
-    const socket = new WebSocket(`${serverUrls[platform]}/${key}`);
+// Обновление таймера
+function updateTimer() {
+    const currentTime = new Date().getTime() - recordingStartTime;
+    const minutes = Math.floor((currentTime % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((currentTime % (1000 * 60)) / 1000);
+    const timerDisplay = document.getElementById('timer');
     
-    socket.onopen = async () => {
-        const offer = await rtcPeerConnection.createOffer();
-        await rtcPeerConnection.setLocalDescription(offer);
-        
-        socket.send(rtcPeerConnection.localDescription.toJSON().sdp);
-    };
+    timerDisplay.textContent = 
+        (minutes < 10 ? '0' + minutes : minutes) + 
+        ':' + 
+        (seconds < 10 ? '0' + seconds : seconds);
+}
 
-    rtcPeerConnection.onicecandidate = async event => {
-        if (event.candidate) {
-            await rtcPeerConnection.addIceCandidate(event.candidate);
+// Обновление прогресс-бара
+function updateProgressBar() {
+    const totalSize = chunks.reduce((acc, chunk) => acc + chunk.size, 0);
+    const progress = (totalSize / (1024 * 1024)) * 100; // в МБ
+    progressBar.style.width = Math.min(progress, 100) + '%';
+}
+
+// Сброс интерфейса
+function resetUI() {
+    document.getElementById('start').disabled = false;
+    document.getElementById('stop').disabled = true;
+    document.getElementById('timer').textContent = '00:00';
+    progressBar.style.width = '0%';
+    clearInterval(timerInterval);
+    
+    const preview = document.getElementById('preview');
+    if (preview.srcObject) {
+        preview.srcObject.getTracks().forEach(track => track.stop());
+        preview.srcObject = null;
+    }
+}
+
+// Управление записью
+document.getElementById('start').addEventListener('click', async () => {
+    try {
+        await getMedia();
+        mediaRecorder.start();
+        
+        recordingStartTime = new Date().getTime();
+        timerInterval = setInterval(updateTimer, 1000);
+        
+        document.getElementById('start').disabled = true;
+        document.getElementById('stop').disabled = false;
+    } catch (error) {
+        handleError(error);
+    }
+});
+
+document.getElementById('stop').addEventListener('click', () => {
+    mediaRecorder.stop();
+});
+
+// Обработка сочетания клавиш для удобства
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+        if (mediaRecorder && mediaRecorder.state === 'recording') {
+            document.getElementById('stop').click();
         }
-    };
-
-    return rtcPeerConnection;
-}
-
-async function startTelegramStreaming(botToken, chatId) {
-    const canvas = document.createElement('canvas');
-    const video = document.createElement('video');
-    video.srcObject = combinedStream;
-    video.play();
-
-    setInterval(async () => {
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0);
-        
-        const dataURL = canvas.toDataURL('image/jpeg');
-        const response = await fetch(`https://api.telegram.org/bot${botToken}/sendVideo`, {
-            method: 'POST',
-            body: new FormData().append('chat_id', chatId).append('video', dataURL)
-        });
-        
-        if (!response.ok) {
-            console.error('Ошибка отправки в Telegram:', await response.text());
-        }
-    }, 3000); // Каждые 3 секунды
-}
-
-function stopAllStreams() {
-    Object.values(rtcPeerConnections).forEach(connection => {
-        connection.close();
-    });
-    rtcPeerConnections = {};
-}
+    }
+});
 </script>
 </body>
 </html>
