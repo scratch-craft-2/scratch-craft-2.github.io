@@ -1,83 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
 <head>
-    <title>Проверка орфографии</title>
-    <meta charset="utf-8">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корректор текста</title>
     <style>
         body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
             text-align: center;
-            margin: 20px;
-            font-family: Verdana, Arial, sans-serif;
-            font-size: 16px;
         }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
         textarea {
-            width: 80%;
+            width: 100%;
             height: 200px;
-            margin: 20px;
+            margin: 10px 0;
             padding: 10px;
             border: 1px solid #ccc;
-            border-radius: 5px;
+            border-radius: 4px;
         }
+        
         button {
             padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+        }
+        
+        button:hover {
+            background-color: #0056b3;
         }
     </style>
 </head>
 <body>
-    <h1>Проверка орфографии</h1>
-    <p>Введите текст для проверки:</p>
-    <textarea id="text_area" placeholder="Введите текст здесь..."></textarea>
-    <button id="checkButton">Проверить орфографию</button>
-    <div id="result"></div>
+    <div class="container">
+        <h1>Проверка и исправление текста</h1>
+        <p>Вставьте текст для проверки и нажмите кнопку "Проверить"</p>
+        
+        <textarea id="inputText" placeholder="Введите текст здесь..."></textarea>
+        <button onclick="checkText()">Проверить</button>
+        
+        <h2>Результат:</h2>
+        <textarea id="outputText" readonly style="background-color: #f8f9fa;"></textarea>
+    </div>
 
-    <!-- Подключение jQuery -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
-        let checkCount = 0;
-        const MAX_CHECKS = 10000; // Максимальное количество проверок
-
-        function checkText() {
-            if (checkCount >= MAX_CHECKS) {
-                alert('Превышено количество проверок за сутки');
-                return;
-            }
-
-            const text = $('#text_area').val();
-            if (!text.trim()) {
+        async function checkText() {
+            const inputText = $('#inputText').val();
+            
+            if (!inputText) {
                 alert('Введите текст для проверки');
                 return;
             }
-
-            checkCount++;
             
-            // Отправляем текст на проверку
-            $.getJSON('https://speller.yandex.net/services/spellservice.json/checkText', {
-                text: encodeURIComponent(text)
-            })
-            .done(function(data) {
-                if (data.length === 0) {
-                    $('#result').html('<p style="color: green;">Текст написан без ошибок!</p>');
-                    return;
-                }
-
-                let resultText = '<p>Найденные ошибки:</p><ul>';
-                data.forEach(function(error) {
-                    resultText += `<li>Слово "${error.word}" можно заменить на "${error.s[0]}"</li>`;
-                });
-                resultText += '</ul>';
+            try {
+                const response = await fetch(`https://speller.yandex.net/services/spellservice.json/checkText?text=${encodeURIComponent(inputText)}`);
+                const data = await response.json();
                 
-                $('#result').html(resultText);
-            })
-            .fail(function() {
-                alert('Произошла ошибка при проверке текста');
-            });
+                let correctedText = inputText;
+                
+                // Применяем исправления
+                for (let error of data) {
+                    const word = correctedText.substring(error.wordpos, error.wordpos + error.wordlen);
+                    if (error.s.length > 0) {
+                        correctedText = correctedText.replace(word, error.s[0]);
+                    }
+                }
+                
+                $('#outputText').val(correctedText);
+            } catch (error) {
+                alert('Ошибка при проверке текста. Попробуйте позже.');
+            }
         }
-
-        // Обработчик клика по кнопке
-        $('#checkButton').click(function() {
-            checkText();
-        });
     </script>
 </body>
 </html>
