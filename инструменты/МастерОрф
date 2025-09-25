@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Проверка орфографии</title>
+    <meta charset="utf-8">
+    <style>
+        body {
+            text-align: center;
+            margin: 20px;
+            font-family: Verdana, Arial, sans-serif;
+            font-size: 16px;
+        }
+        textarea {
+            width: 80%;
+            height: 200px;
+            margin: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Проверка орфографии</h1>
+    <p>Введите текст для проверки:</p>
+    <textarea id="text_area" placeholder="Введите текст здесь..."></textarea>
+    <button id="checkButton">Проверить орфографию</button>
+    <div id="result"></div>
+
+    <!-- Подключение jQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        let checkCount = 0;
+        const MAX_CHECKS = 10000; // Максимальное количество проверок
+
+        function checkText() {
+            if (checkCount >= MAX_CHECKS) {
+                alert('Превышено количество проверок за сутки');
+                return;
+            }
+
+            const text = $('#text_area').val();
+            if (!text.trim()) {
+                alert('Введите текст для проверки');
+                return;
+            }
+
+            checkCount++;
+            
+            // Отправляем текст на проверку
+            $.getJSON('https://speller.yandex.net/services/spellservice.json/checkText', {
+                text: encodeURIComponent(text)
+            })
+            .done(function(data) {
+                if (data.length === 0) {
+                    $('#result').html('<p style="color: green;">Текст написан без ошибок!</p>');
+                    return;
+                }
+
+                let resultText = '<p>Найденные ошибки:</p><ul>';
+                data.forEach(function(error) {
+                    resultText += `<li>Слово "${error.word}" можно заменить на "${error.s[0]}"</li>`;
+                });
+                resultText += '</ul>';
+                
+                $('#result').html(resultText);
+            })
+            .fail(function() {
+                alert('Произошла ошибка при проверке текста');
+            });
+        }
+
+        // Обработчик клика по кнопке
+        $('#checkButton').click(function() {
+            checkText();
+        });
+    </script>
+</body>
+</html>
