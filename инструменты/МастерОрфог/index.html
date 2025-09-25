@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -47,12 +46,12 @@
 
             try {
                 // Разделяем текст на слова с сохранением пробелов и знаков препинания
-                const words = input.split(/([\s\n\r.,!?;:])/);
+                const words = input.match(/[\wё]+|[^\w\sё]+/g) || [];
                 let correctedText = '';
-                
-                // Проверяем каждое слово отдельно
+                let position = 0;
+
                 for (let word of words) {
-                    // Проверяем только если это слово (не пробел и не пунктуация)
+                    // Проверяем только если это слово
                     if (/[а-яё]/i.test(word)) {
                         const response = await fetch('https://speller.yandex.net/services/spellservice.json/checkText', {
                             method: 'POST',
@@ -61,16 +60,23 @@
                             },
                             body: `text=${encodeURIComponent(word)}`
                         });
-                        
+
                         const data = await response.json();
                         if (data.length > 0) {
                             // Берем первое исправление
-                            correctedText += data[0].s[0] || word;
+                            const correctedWord = data[0].s.length > 0 ? data[0].s[0] : word;
+                            // Сохраняем регистр первого символа
+                            if (word[0] === word[0].toUpperCase()) {
+                                correctedText += correctedWord.charAt(0).toUpperCase() + correctedWord.slice(1);
+                            } else {
+                                correctedText += correctedWord;
+                            }
                         } else {
                             correctedText += word;
                         }
                     } else {
-                        correctedText += word; // Сохраняем пробелы и пунктуацию
+                        // Добавляем знаки препинания и пробелы как есть
+                        correctedText += word;
                     }
                 }
 
@@ -82,3 +88,4 @@
     </script>
 </body>
 </html>
+
