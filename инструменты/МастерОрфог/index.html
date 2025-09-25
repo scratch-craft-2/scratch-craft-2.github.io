@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ru">
 <head>
@@ -45,41 +46,36 @@
             }
 
             try {
-                // Разделяем текст на абзацы для корректной обработки
-                const paragraphs = input.split('\n\n');
+                // Разделяем текст на слова с сохранением пробелов и знаков препинания
+                const words = input.split(/([\s\n\r.,!?;:])/);
                 let correctedText = '';
-
-                for (let paragraph of paragraphs) {
-                    // Отправляем каждый абзац отдельно
-                    const response = await fetch('https://speller.yandex.net/services/spellservice.json/checkText', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded'
-                        },
-                        body: `text=${encodeURIComponent(paragraph)}`
-                    });
-
-                    const data = await response.json();
-                    let correctedParagraph = paragraph;
-
-                    // Применяем исправления
-                    for (let error of data) {
-                        const start = error.word_pos;
-                        const length = error.word.length;
-                        if (error.s.length > 0) {
-                            correctedParagraph = correctedParagraph.substring(0, start) +
-                                error.s[0] + // Берем первое предложенное исправление
-                                correctedParagraph.substring(start + length);
+                
+                // Проверяем каждое слово отдельно
+                for (let word of words) {
+                    // Проверяем только если это слово (не пробел и не пунктуация)
+                    if (/[а-яё]/i.test(word)) {
+                        const response = await fetch('https://speller.yandex.net/services/spellservice.json/checkText', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded'
+                            },
+                            body: `text=${encodeURIComponent(word)}`
+                        });
+                        
+                        const data = await response.json();
+                        if (data.length > 0) {
+                            // Берем первое исправление
+                            correctedText += data[0].s[0] || word;
+                        } else {
+                            correctedText += word;
                         }
+                    } else {
+                        correctedText += word; // Сохраняем пробелы и пунктуацию
                     }
-
-                    // Сохраняем структуру абзацев
-                    correctedText += correctedParagraph + '\n\n';
                 }
 
-                document.getElementById('outputText').value = correctedText.trim();
-            } 
-            catch (error) {
+                document.getElementById('outputText').value = correctedText;
+            } catch (error) {
                 alert('Ошибка при проверке текста. Попробуйте позже.');
             }
         }
