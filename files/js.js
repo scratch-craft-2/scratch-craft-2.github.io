@@ -59,8 +59,8 @@ function toggleClasses(classMap) {
 const classMap = {
     'normbody': 'darkbody',
     'link': 'linkdark',
-    'content_group contributors-list': 'content_group.contributors-listdark',
-    'button contributor-type1': 'buttondark.contributor-type1',
+    'content_group.contributors-list': 'content_group.contributors-listdark',
+    'button.contributor-type1': 'buttondark.contributor-type1',
     'tutorial': 'tutorialdark'
 };
 
