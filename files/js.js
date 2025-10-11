@@ -61,11 +61,11 @@ function toggleClasses(classMap) {
 // Исправленный пример JSON объекта с маппингом классов
 // Убираем точки в ключах, так как они уже учитываются в querySelectorAll
 const classMap = {
-    '.content_group.contributors-list': '.content_group.contributors-listdark',
-    '.button.contributor-type1': '.buttondark.contributor-type1',
-    '.tutorial': '.tutorialdark',
-    '.normbody': '.darkbody',
-    '.link': '.linkdark'
+    'content_group.contributors-list': '.content_group contributors-listdark',
+    'button contributor-type1': 'buttondark contributor-type1',
+    'tutorial': 'tutorialdark',
+    'normbody': 'darkbody',
+    'link': 'linkdark'
 };
 
 // Обработка параметров URL
