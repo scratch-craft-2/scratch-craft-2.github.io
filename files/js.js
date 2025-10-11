@@ -28,42 +28,44 @@ document.addEventListener("DOMContentLoaded", ready);
 
 // Функция для переключения классов
 function toggleClasses(classMap) {
-// Проходим по всем парам ключ-значение в объекте
-for (let baseClass in classMap) {
-if (classMap.hasOwnProperty(baseClass)) {
-const targetClass = classMap[baseClass];
+    // Проходим по всем парам ключ-значение в объекте
+    for (let baseClass in classMap) {
+        if (classMap.hasOwnProperty(baseClass)) {
+            const targetClass = classMap[baseClass];
+            
+            // Используем querySelectorAll для поддержки сложных селекторов
+            const elements = document.querySelectorAll(`.${baseClass}`);
+            
+            // Обрабатываем каждый элемент
+            for (let i = 0; i < elements.length; i++) {
+                const element = elements[i];
+                
+                // Проверяем текущий набор классов
+                if (element.classList.contains(baseClass)) {
+                    // Удаляем старый класс и добавляем новый
+                    element.classList.remove(baseClass);
+                    element.classList.add(targetClass);
+                } else if (element.classList.contains(targetClass)) {
+                    // Удаляем новый класс и добавляем старый
+                    element.classList.remove(targetClass);
+                    element.classList.add(baseClass);
+                }
+            }
+        }
+    }
+}
 
-// Получаем все элементы с базовым классом
-const elements = document.getElementsByClassName(baseClass);
-
-// Обрабатываем каждый элемент
-for (let i = 0; i < elements.length; i++) {
-const element = elements[i];
-
-// Проверяем текущий набор классов
-if (element.classList.contains(baseClass)) {
-// Если есть базовый класс - заменяем на целевой
-element.classList.replace(baseClass, targetClass);
-} else if (element.classList.contains(targetClass)) {
-// Если есть целевой класс - заменяем на базовый
-element.classList.replace(targetClass, baseClass);
-}
-}
-}
-}
-}
-
-// Пример JSON объекта с маппингом классов
+// Пример объекта с маппингом классов
 const classMap = {
-'normbody': 'darkbody',
-'link': 'linkdark',
-'content_group contributors-list': 'content_group contributors-listdark',
-'button contributor-type1': 'buttondark contributor-type1',
-'tutorial': 'tutorialdark'
+    'normbody': 'darkbody',
+    'link': 'linkdark',
+    'content_group contributors-list': 'content_group contributors-listdark',
+    'button contributor-type1': 'button buttondark contributor-type1',
+    'tutorial': 'tutorialdark'
 };
 
-switch (new URLSearchParams(location.search).get("see")) {
-case "dark":
-toggleClasses(classMap);
-break;
+// Обработка параметра URL
+const params = new URLSearchParams(location.search);
+if (params.get("see") === "dark") {
+    toggleClasses(classMap);
 }
