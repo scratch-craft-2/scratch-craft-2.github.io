@@ -41,3 +41,40 @@ if (gravity == "true") {
 }
 
 document.addEventListener("DOMContentLoaded", ready);
+
+// Функция для переключения классов
+function toggleClasses(classMap) {
+    // Проходим по всем парам ключ-значение в объекте
+    for (let baseClass in classMap) {
+        if (classMap.hasOwnProperty(baseClass)) {
+            const targetClass = classMap[baseClass];
+            
+            // Получаем все элементы с базовым классом
+            const elements = document.getElementsByClassName(baseClass);
+            
+            // Обрабатываем каждый элемент
+            for (let i = 0; i < elements.length; i++) {
+                const element = elements[i];
+                
+                // Проверяем текущий набор классов
+                if (element.classList.contains(baseClass)) {
+                    // Если есть базовый класс - заменяем на целевой
+                    element.classList.replace(baseClass, targetClass);
+                } else if (element.classList.contains(targetClass)) {
+                    // Если есть целевой класс - заменяем на базовый
+                    element.classList.replace(targetClass, baseClass);
+                }
+            }
+        }
+    }
+}
+
+// Пример JSON объекта с маппингом классов
+const classMap = {
+    'normbody': 'darkbody',     
+    'link': 'linkdark',      
+    'content_group.contributors-list': 'content_group.contributors-listdark',      
+    'button.contributor-type1': 'buttondark.contributor-type1'  
+    'tutorial': 'tutorialdark'  
+};
+
