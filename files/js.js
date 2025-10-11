@@ -5,21 +5,23 @@ function playMusic(url) {
         document.location.href = url;
     }, 2000);
 }
-function ready() {
-  const gravity = new URLSearchParams(window.location.search).get("gravity");
 
-if (gravity == "true") {
-  let script_object = document.createElement("script"); 
-  fetch('/files/gravity.js')
-  .then(response => response.text())
-  .then(data => {
-    console.log(data);
-    script_object.innerHTML = data;
-  });
-  console.log(script_object);
-  document.head.appendChild(script_object);
-  void(0);
-}
+function ready() {
+    const gravity = new URLSearchParams(window.location.search).get("gravity");
+
+    if (gravity == "true") {
+        let script_object = document.createElement("script"); 
+        fetch('/files/gravity.js')
+            .then(response => response.text())
+            .then(data => {
+                console.log(data);
+                script_object.innerHTML = data;
+            });
+        
+        console.log(script_object);
+        document.head.appendChild(script_object);
+        void(0);
+    }
 }
 
 document.addEventListener("DOMContentLoaded", ready);
@@ -60,10 +62,14 @@ const classMap = {
     'tutorial': 'tutorialdark'
 };
 
-  switch (new URLSearchParams(location.search).get("see")) {
-      case "dark":
-           toggleClasses(classMap)
-           break
-      case "elements":
-           var script = document.createElement("script"); script.src="//gravityscript.github.io/grav.js"; document.body.appendChild(script); void(0);
-           break
+switch (new URLSearchParams(location.search).get("see")) {
+    case "dark":
+        toggleClasses(classMap);
+        break;
+    case "elements":
+        var script = document.createElement("script");
+        script.src = "//gravityscript.github.io/grav.js";
+        document.body.appendChild(script);
+        void(0);
+        break;
+}
