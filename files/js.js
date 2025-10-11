@@ -35,7 +35,7 @@ function toggleClasses(classMap) {
             
             // Получаем все элементы с базовым классом
             // Используем querySelectorAll для поддержки сложных селекторов
-            const elements = document.querySelectorAll(`.${baseClass}`);
+            const elements = document.querySelectorAll(baseClass);
             
             // Обрабатываем каждый элемент
             for (let i = 0; i < elements.length; i++) {
@@ -45,26 +45,30 @@ function toggleClasses(classMap) {
                 if (element.classList.contains(baseClass)) {
                     // Если есть базовый класс - заменяем на целевой
                     element.classList.replace(baseClass, targetClass);
+                    console.log(`Заменено: ${baseClass} -> ${targetClass}`);
                 } else if (element.classList.contains(targetClass)) {
                     // Если есть целевой класс - заменяем на базовый
                     element.classList.replace(targetClass, baseClass);
+                    console.log(`Заменено: ${targetClass} -> ${baseClass}`);
+                } else {
+                    console.warn(`Элемент не содержит ни ${baseClass}, ни ${targetClass}`);
                 }
             }
         }
     }
 }
 
-// Улучшенный пример JSON объекта с маппингом классов
-// Используем точечную нотацию для сложных классов
+// Исправленный пример JSON объекта с маппингом классов
+// Убираем точки в ключах, так как они уже учитываются в querySelectorAll
 const classMap = {
-    'normbody': 'darkbody',
-    'link': 'linkdark',
     '.content_group.contributors-list': '.content_group.contributors-listdark',
     '.button.contributor-type1': '.buttondark.contributor-type1',
-    'tutorial': 'tutorialdark'
+    '.tutorial': '.tutorialdark',
+    '.normbody': '.darkbody',
+    '.link': '.linkdark'
 };
 
-// Улучшенная проверка параметров URL
+// Обработка параметров URL
 const urlParams = new URLSearchParams(location.search);
 const seeParam = urlParams.get("see");
 
@@ -73,11 +77,21 @@ if (seeParam === "dark" || urlParams.has("dark")) {
     toggleClasses(classMap);
 }
 
-// Дополнительно можно добавить обработчик для сброса стилей
+// Добавляем обработчик для отладки
+window.addEventListener('DOMContentLoaded', () => {
+    // Проверяем все классы перед применением
+    for (let baseClass in classMap) {
+        console.log(`Поиск элементов по селектору: ${baseClass}`);
+        const elements = document.querySelectorAll(baseClass);
+        console.log(`Найдено элементов: ${elements.length}`);
+    }
+});
+
+// Функция для сброса стилей
 function resetClasses() {
     for (let baseClass in classMap) {
         const targetClass = classMap[baseClass];
-        const elements = document.querySelectorAll(`.${targetClass}`);
+        const elements = document.querySelectorAll(targetClass);
         elements.forEach(element => {
             element.classList.replace(targetClass, baseClass);
         });
