@@ -120,6 +120,11 @@ dashimage {
     height: 200px;
     filter: drop-shadow(25px 5px 15px #00000088);
 }
+body {
+    font-family: "Noto Sans", sans-serif;
+    color: hsl(225deg 15% 40%);
+    margin: 0;
+} 
 
 body.normbody {
     font-family: "Noto Sans", sans-serif;
