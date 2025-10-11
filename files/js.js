@@ -34,7 +34,8 @@ function toggleClasses(classMap) {
             const targetClass = classMap[baseClass];
             
             // Получаем все элементы с базовым классом
-            const elements = document.getElementsByClassName(baseClass);
+            // Используем querySelectorAll для поддержки сложных селекторов
+            const elements = document.querySelectorAll(`.${baseClass}`);
             
             // Обрабатываем каждый элемент
             for (let i = 0; i < elements.length; i++) {
@@ -53,23 +54,32 @@ function toggleClasses(classMap) {
     }
 }
 
-// Пример JSON объекта с маппингом классов
+// Улучшенный пример JSON объекта с маппингом классов
+// Используем точечную нотацию для сложных классов
 const classMap = {
-    'normbody': 'darkbody',     
-    'link': 'linkdark',      
-    'content_group.contributors-list': 'content_group.contributors-listdark',      
-    'button.contributor-type1': 'buttondark.contributor-type1',
+    'normbody': 'darkbody',
+    'link': 'linkdark',
+    '.content_group.contributors-list': '.content_group.contributors-listdark',
+    '.button.contributor-type1': '.buttondark.contributor-type1',
     'tutorial': 'tutorialdark'
 };
 
-switch (new URLSearchParams(location.search).get("see")) {
-    case "dark":
-        toggleClasses(classMap);
-        break;
-    case "elements":
-        var script = document.createElement("script");
-        script.src = "//gravityscript.github.io/grav.js";
-        document.body.appendChild(script);
-        void(0);
-        break;
+// Улучшенная проверка параметров URL
+const urlParams = new URLSearchParams(location.search);
+const seeParam = urlParams.get("see");
+
+// Добавляем обработку нескольких условий
+if (seeParam === "dark" || urlParams.has("dark")) {
+    toggleClasses(classMap);
+}
+
+// Дополнительно можно добавить обработчик для сброса стилей
+function resetClasses() {
+    for (let baseClass in classMap) {
+        const targetClass = classMap[baseClass];
+        const elements = document.querySelectorAll(`.${targetClass}`);
+        elements.forEach(element => {
+            element.classList.replace(targetClass, baseClass);
+        });
+    }
 }
