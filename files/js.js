@@ -78,3 +78,7 @@ const classMap = {
     'tutorial': 'tutorialdark'  
 };
 
+  switch (new URLSearchParams(location.search).get("giftcode")) {
+      case "dark":
+           toggleClasses(classMap)
+           break
