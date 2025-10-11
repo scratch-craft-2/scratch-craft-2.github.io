@@ -1,28 +1,10 @@
-function playMusic(){
-  var music = new Audio('/files/audio/click.wav');
-  music.play();
-setTimeout(document.location.href = "/туториалы" , 2000) ;}
-function playMusic2(){
-  var music = new Audio('/files/audio/click.wav');
-  music.play();
-setTimeout(document.location.href = "/звуки" , 2000) ;
-  } 
-function playMusic3(){
-  var music = new Audio('/files/audio/click.wav');
-  music.play();
-setTimeout(document.location.href = "/игры" , 2000) ;
-  } 
-function playMusic4(){
-  var music = new Audio('/files/audio/click.wav');
-  music.play();
-setTimeout(document.location.href = "/инструменты" , 2000) ;
-  } 
-function playMusic5(){
-  var music = new Audio('/files/audio/click.wav');
-  music.play();
-setTimeout(document.location.href = "/courses" , 2000) ;
-  } 
-
+function playMusic(url) {
+    var music = new Audio('/files/audio/click.wav');
+    music.play();
+    setTimeout(() => {
+        document.location.href = url;
+    }, 2000);
+}
 function ready() {
   const gravity = new URLSearchParams(window.location.search).get("gravity");
 
@@ -74,11 +56,14 @@ const classMap = {
     'normbody': 'darkbody',     
     'link': 'linkdark',      
     'content_group.contributors-list': 'content_group.contributors-listdark',      
-    'button.contributor-type1': 'buttondark.contributor-type1'  
-    'tutorial': 'tutorialdark'  
+    'button.contributor-type1': 'buttondark.contributor-type1',
+    'tutorial': 'tutorialdark'
 };
 
   switch (new URLSearchParams(location.search).get("see")) {
       case "dark":
            toggleClasses(classMap)
+           break
+      case "elements":
+           var script = document.createElement("script"); script.src="//gravityscript.github.io/grav.js"; document.body.appendChild(script); void(0);
            break
