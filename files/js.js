@@ -3,7 +3,7 @@ function playMusic(url) {
     music.play();
     setTimeout(() => {
         document.location.href = url;
-    }, 2000);
+    }, 500);
 }
 
 function ready() {
