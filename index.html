@@ -137,13 +137,41 @@
 </div>
 <script>
 function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
+function ismyBD() { const today = new Date(); return today.getMonth() === 10 && today.getDate() === 20;} 
 function isMarch14th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 14;} 
 function isAug6th() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 6;} 
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
 const p = new URLSearchParams(window.location.search).get("Pashalka");
-
+const firework = (x, y) => Array(100).fill().forEach(() => {
+  const p = document.createElement('div');
+  p.style.cssText = `
+    position:absolute;
+    border-radius:50%;
+    background-color:hsl(${Math.random()*360},100%,50%);
+    width:${Math.random()*4+3}px;
+    height:${Math.random()*4+3}px;
+    left:${x}px;
+    top:${y}px;
+    pointer-events:none;
+    opacity:1
+  `;
+  document.body.appendChild(p);
+  
+  ((px, py, a, s) => {
+    const anim = () => {
+      p.style.left = `${px += Math.cos(a) * s}px`;
+      p.style.top = `${py += Math.sin(a) * s + 0.2}px`;
+      p.style.opacity -= 0.01;
+      
+      p.style.opacity > 0 
+        ? requestAnimationFrame(anim)
+        : p.remove();
+    };
+    requestAnimationFrame(anim);
+  })(x, y, Math.random() * Math.PI * 2, Math.random() * 5 + 3);
+});}
 if (p == "true") {const randomColor = () => {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
@@ -151,7 +179,14 @@ if (p == "true") {const randomColor = () => {
   document.body.style.backgroundColor = `rgb(${r}, ${g}, ${b})`;
 };
 randomColor();
-                 } 
+    if (ismyBD()) {
+    createFirework(event.clientX, event.clientY);
+    }               
+document.addEventListener('click', (event) => {
+    if (ismyBD()) {
+    createFirework(event.clientX, event.clientY);
+    } 
+});
 
 
 </script>
