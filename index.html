@@ -50,9 +50,9 @@
         <img id="image1" class="sizeconrol" src="/files/img/imglogoNEW.svg" style="float:left;">
         <div>
           <div style="font-size: 50px;">Добро пожаловать!</div>
-          <div>Это сайт Скретчера scratch_craft_2</div>
+          <div>Это сайт скретчера Scratch_craft_2</div>
           <div>
-            Сейчас Вы находитесь на <a class="link" href="/">главной_странице_сайта</a>
+            <a class="aanimation">Сейчас Вы находитесь на <a class="link" href="/">главной_странице_сайта</a>
           </div>
         </div>
       </div>
@@ -139,11 +139,72 @@
 function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
 function ismyBD() { const today = new Date(); return today.getMonth() === 10 && today.getDate() === 20;} 
 function isMarch14th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 14;} 
+function ishallowen() { const today = new Date(); return today.getMonth() === 9 && today.getDate() === 31;} 
 function isAug6th() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 6;} 
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isMyBD()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoDB.svg';}
+if (ishallowen()) {(function() {
+    // 1. Добавляем стили по указанному URL (предполагаем, что URL указан в переменной)
+    const styleUrl = 'https://scratch-craft-2.github.io/files/css/hallowen.css'; // замените на нужный URL
+    
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.type = 'text/css';
+    link.href = styleUrl;
+    document.head.appendChild(link);
+
+    // 2. Создаём и добавляем HTML-структуру паука после тега <header>
+    const spiderHtml = `
+        <div class="spider">
+            <div class="spiderweb"></div>
+            <div class="body">
+                <div class="eye left"></div>
+                <div class="eye right"></div>
+            </div>
+            <div class="legs left">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+            <div class="legs right">
+                <div class="leg"></div>
+                <div class="leg"></div>
+                <div class="leg"></div>
+            </div>
+        </div>
+    `;
+    
+    const header = document.querySelector('header');
+    if (header) {
+        header.insertAdjacentHTML('afterend', spiderHtml);
+    }
+
+    // 3. Добавляем класс halloween-animation к элементам с классом aanimation
+    const animatedElements = document.querySelectorAll('.aanimation');
+    animatedElements.forEach(element => {
+        element.classList.add('halloween-animation');
+    });
+
+    // 4. Добавляем <style> в <body>
+    const style = document.createElement('style');
+    style.textContent = `
+        #pumpkin {
+            position: fixed;
+            left: 0;
+            bottom: 0;
+            z-index: 1001;
+        }
+    `;
+    document.body.appendChild(style);
+
+    // 5. Добавляем div с тыквой в body
+    const pumpkinDiv = document.createElement('div');
+    pumpkinDiv.id = 'pumpkin';
+    pumpkinDiv.innerHTML = '<img src="https://i.gyazo.com/3fad566ba3f8b5d08c98524267404d71.png">';
+    document.body.appendChild(pumpkinDiv);
+})();}
 const p = new URLSearchParams(window.location.search).get("Pashalka");
 window.firework = (x, y) => Array(100).fill().forEach(() => {
   const p = document.createElement('div');
