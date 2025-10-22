@@ -224,4 +224,4 @@ document.addEventListener('click', (event) => {
     if (ismyBD()) {
     firework(event.clientX, event.clientY);
     } 
-});
+})};
