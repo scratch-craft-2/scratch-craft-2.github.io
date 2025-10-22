@@ -375,3 +375,74 @@ div.part2 {
     height: auto;
     color: #32353a;
 }
+
+#leaf-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -1;
+}
+
+#leaf-container span {
+    position: absolute;
+    width: 35px;
+    height: 35px;
+    background: url('https://upforme.ru/uploads/001c/1e/87/2/451018.png'); 
+    background-size: cover;
+    animation: fall 5s linear infinite;
+}
+
+@keyframes fall {
+    0% {
+        transform: translate(0, -100vh) rotate(0deg) scale(0.5);
+        opacity: 0;
+    }
+    100% {
+        transform: translate(calc(100vw * var(--random-x)), 100vh) rotate(720deg) scale(1);
+        opacity: 1;
+    }
+}
+
+/* Génération de valeurs aléatoires pour le déplacement horizontal */
+#leaf-container span:nth-child(1) {
+    --random-x: 0.1;
+  animation-delay: 1s; /* Retard de 2 secondes pour la première feuille */
+}
+
+#leaf-container span:nth-child(2) {
+    --random-x: 0.3;
+  animation-delay: 1s;
+}
+
+#leaf-container span:nth-child(3) {
+    --random-x: 0.5;
+  animation-delay: 3s;
+}
+
+#leaf-container span:nth-child(4) {
+    --random-x: 0.8;
+  animation-delay: 4s;
+}
+
+#leaf-container span:nth-child(5) {
+    --random-x: 1;
+  animation-delay: 1.4s;
+}
+
+#leaf-container span:nth-child(6) {
+    --random-x: 1.2;
+  animation-delay: 1.2s;
+}
+
+#leaf-container span:nth-child(7) {
+    --random-x: 1.5;
+  animation-delay: 2.1s;
+}
+
+#leaf-container span:nth-child(8) {
+    --random-x: 1.8;
+  animation-delay: 2s;
+}
