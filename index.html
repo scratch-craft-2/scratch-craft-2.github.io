@@ -143,6 +143,7 @@ function isAug6th() { const today = new Date(); return today.getMonth() === 7 &&
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
+if (isMyBD()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoDB.svg';}
 const p = new URLSearchParams(window.location.search).get("Pashalka");
 window.firework = (x, y) => Array(100).fill().forEach(() => {
   const p = document.createElement('div');
