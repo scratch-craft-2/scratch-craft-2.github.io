@@ -240,6 +240,7 @@ window.firework = (x, y) => Array(100).fill().forEach(() => {
     requestAnimationFrame(anim);
   })(x, y, Math.random() * Math.PI * 2, Math.random() * 5 + 3);
 });
+const p = new URLSearchParams(window.location.search).get("Pashalka");
 if (p == "true") {const randomColor = () => {
   const r = Math.floor(Math.random() * 256);
   const g = Math.floor(Math.random() * 256);
