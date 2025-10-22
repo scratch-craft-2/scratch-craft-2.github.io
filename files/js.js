@@ -93,8 +93,8 @@ function isSeason4() {
   const currentYear = now.getFullYear();
 
   // Создаём даты начала и конца диапазона
-  const startDate = new Date(currentYear, 10, 30); 
-  const endDate = new Date(currentYear, 1, 20);
+  const startDate = new Date(currentYear, 10, 30); // 30 ноября текущего года
+  const endDate = new Date(currentYear + 1, 1, 20); // 20 февраля следующего года
 
   // Проверяем, что текущая дата попадает в диапазон
   return now >= startDate && now <= endDate;
