@@ -1,0 +1,58 @@
+.bday-animation {
+  position: relative;
+  display: inline-block;
+}
+
+.bday-animation::before,
+.bday-animation::after {
+  display: block;
+  content: '';
+  height: 20px;
+  width: 15px;
+  position: absolute;
+  opacity: 0;
+  transition: all 250ms ease-in-out;
+}
+
+.bday-animation:hover::before, .bday-animation:hover::after {
+  opacity: 1;
+}
+
+.bday-animation:hover::before {
+  /* to avoid transition jank in chrome make sure transitions don't include transform */
+  height: 46px;
+  width: 34px;
+  right: -40px;
+  animation: float-right 3s ease-in-out infinite;
+}
+
+.bdayn-animation:hover::after {
+  height: 40px;
+  width: 30px;
+  top: -45px;
+  transform: rotate(-10deg);
+  animation: float-top 3s ease-in-out infinite;
+}
+
+@keyframes float-right {
+  50% {
+    transform: rotate(10deg) translate(0, -15px);
+  }
+}
+@keyframes float-top {
+  50% {
+    transform: rotate(-5deg) translate(0, 10px);
+  }
+}
+
+.bday-animation::before {
+  right: 0;
+  bottom: 0;
+  background: url("https://scratch-craft-2.github.io/files/img/HBD.svg")}
+
+.bday-animation::after {
+  top: 0;
+  left: 50%;
+  background: url("https://scratch-craft-2.github.io/files/img/HBD.svg")}
+
+   
