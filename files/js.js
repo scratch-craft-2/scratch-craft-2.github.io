@@ -100,8 +100,6 @@ function isSeason4() {
   return now >= startDate && now <= endDate;
 }
 
-// Пример использования:
-console.log(isInDateRange()); // true или false в зависимости от текущей даты
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
