@@ -136,15 +136,58 @@
 Вопросы или проблемы на сайте? <a href="https://forms.yandex.ru/u/6754576602848f4b771de003/" class="link">нажмите сюда чтобы связатся</a>
 </div>
 <script>
+function insertAtBeginningOfBody(htmlString) {
+    document.body.insertAdjacentHTML('afterbegin', htmlString);
+}
 function isMarch8th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 8;} 
 function ismyBD() { const today = new Date(); return today.getMonth() === 10 && today.getDate() === 20;} 
 function isMarch14th() { const today = new Date(); return today.getMonth() === 2 && today.getDate() === 14;} 
 function ishallowen() { const today = new Date(); return today.getMonth() === 9 && today.getDate() === 31;} 
 function isAug6th() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 6;} 
+function isSeason3() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  // Создаём даты начала и конца диапазона
+  const startDate = new Date(currentYear, 8, 10); // 10 сентября (месяц 8, т.к. январь = 0)
+  const endDate = new Date(currentYear, 10, 10);   // 10 ноября (месяц 10)
+
+  // Проверяем, что текущая дата попадает в диапазон
+  return now >= startDate && now <= endDate;
+}
+function isSeason4() {
+  const now = new Date();
+  const currentYear = now.getFullYear();
+
+  // Создаём даты начала и конца диапазона
+  const startDate = new Date(currentYear, 10, 30); 
+  const endDate = new Date(currentYear, 1, 20);
+
+  // Проверяем, что текущая дата попадает в диапазон
+  return now >= startDate && now <= endDate;
+}
+
+// Пример использования:
+console.log(isInDateRange()); // true или false в зависимости от текущей даты
 if (isMarch8th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogo8m.svg';} else { console.log('Сегодня не 8 марта.'); }
 if (isMarch14th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoPI.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isAug6th()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoYT.svg';} else { console.log('Сегодня не 14 марта.'); }
 if (isMyBD()) { var image = document.getElementById('image1'); image.src = 'https://scratch-craft-2.github.io/files/img/imglogoDB.svg';}
+if (isSeason3()) {insertAtBeginningOfBody(`
+<div id="leaf-container">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+</div>
+`)}
+if (isSeason4()) {insertAtBeginningOfBody(`
+<div class="snowblock">
+`)}
 if (ishallowen()) {(function() {
     // 1. Добавляем стили по указанному URL (предполагаем, что URL указан в переменной)
     const styleUrl = 'https://scratch-craft-2.github.io/files/css/hallowen.css'; // замените на нужный URL
