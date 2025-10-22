@@ -154,7 +154,36 @@ if (isSeason3()) {
 if (isSeason4()) {
     insertAtBeginningOfBody('<div class="snowblock"></div>');
 }
+if (ismyBD()) {
+    (function() {
+        const styleUrl = 'https://scratch-craft-2.github.io/files/css/HappyBDay.css';
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = styleUrl;
+        document.head.appendChild(link);
 
+        document.querySelectorAll('.aanimation').forEach(element => {
+            element.classList.add('bday-animation');
+        });
+
+        const style = document.createElement('style');
+        style.textContent = `
+            #Happy {
+                position: fixed;
+                left: 0;
+                bottom: 0;
+                z-index: 1001;
+            }
+        `;
+        document.body.appendChild(style);
+
+        const pumpkinDiv = document.createElement('div');
+        pumpkinDiv.id = 'Happy';
+        pumpkinDiv.innerHTML = '<img src="https://scratch-craft-2.github.io/files/img/HBD.svg">';
+        document.body.appendChild(pumpkinDiv);
+    })();
+}
 // Хэллоуин-оформление
 if (ishallowen()) {
     (function() {
