@@ -46,28 +46,23 @@
     </div>
 </header>
 <div class="content">
-<div style="font-size: 35px;">Детектор текущего дня</div>
-  <div style="font-size: 28px;">JS:</div>
+<div style="font-size: 30px;">Детектор текущего дня</div>
+  <div style="font-size: 22px;">JS:</div>
 <div class="code-block">
   <button class="copy-btn" onclick="copyCode(this)">Копировать</button>
-  <pre><code>
-function isCurrentDate(currentMonth, currentDay) {
+  <pre><code>function isCurrentDate(currentMonth, currentDay) {
   const today = new Date();
   const currentMonthZeroBased = currentMonth - 1;
   return (
     today.getMonth() === currentMonthZeroBased && 
     today.getDate() === currentDay
   );
-}
-</code></pre>
+}</code></pre>
 </div>
-<div style="font-size: 28px;">Пример использования:</div>
+<div style="font-size: 22px;">Пример использования:</div>
 <div class="code-block">
-  <pre><code>
-isCurrentDate(1, 1); // true, если сегодня 1 января
-isCurrentDate(12, 31); // true, если сегодня 31 декабря
-
-</code></pre>
+  <pre><code>isCurrentDate(1, 1); // true, если сегодня 1 января
+isCurrentDate(12, 31); // true, если сегодня 31 декабря</code></pre>
 </div>
 </div>
 <div class="content">
