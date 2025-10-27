@@ -285,3 +285,21 @@ document.addEventListener('click', (event) => {
     firework(event.clientX, event.clientY);
     } 
 })}
+
+function copyCode(button) {
+  const codeBlock = button.closest('.code-block');
+  const codeText = codeBlock.querySelector('code').innerText;
+  
+  navigator.clipboard.writeText(codeText)
+    .then(() => {
+      // Кратковременная индикация успеха
+      button.textContent = 'Скопировано!';
+      setTimeout(() => {
+        button.textContent = 'Копировать';
+      }, 2000);
+    })
+    .catch(err => {
+      console.error('Ошибка копирования:', err);
+      alert('Не удалось скопировать код. Попробуйте вручную.');
+    });
+}
