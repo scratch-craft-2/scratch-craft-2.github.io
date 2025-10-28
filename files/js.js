@@ -320,14 +320,14 @@ document.addEventListener('DOMContentLoaded', function() {
   function updateSidebarState() {
     const currentScrollY = window.scrollY;
 
-    // ГЛАВНОЕ: если курсор на панели — показываем ВСЕГДА
+    // Если курсор в зоне наведения — показываем панель
     if (isHovered) {
       sidebar.classList.remove('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '1');
-      return; // Прерываем выполнение, игнорируя логику прокрутки
+      return;
     }
 
-    // Логика для прокрутки (работает только если курсор НЕ на панели)
+    // Логика для прокрутки (работает только если курсор вне зоны)
     if (currentScrollY > lastScrollY) {
       sidebar.classList.add('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '0');
@@ -339,17 +339,21 @@ document.addEventListener('DOMContentLoaded', function() {
     lastScrollY = currentScrollY;
   }
 
-  // Обработчики событий
+  // Обработчики событий для псевдоэлемента (зона наведения)
   sidebar.addEventListener('mouseenter', () => {
     isHovered = true;
-    updateSidebarState(); // Мгновенно показываем при наведении
+    updateSidebarState();
   });
 
-  sidebar.addEventListener('mouseleave', () => {
-    isHovered = false;
-    updateSidebarState(); // Возвращаем логику прокрутки при уходе курсора
+  sidebar.addEventListener('mouseleave', (e) => {
+    // Проверяем, ушёл ли курсор за пределы зоны наведения
+    if (!sidebar.contains(e.relatedTarget)) {
+      isHovered = false;
+      updateSidebarState();
+    }
   });
 
   window.addEventListener('scroll', updateSidebarState);
   updateSidebarState(); // Инициализация
 });
+
