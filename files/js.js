@@ -321,3 +321,14 @@ document.addEventListener('DOMContentLoaded', function() {
  });
  });
 });
+
+
+function openNav() {
+  document.documentElement.style.setProperty('--sidebar-open', '1');
+  document.getElementById('sidebar').classList.add('open');
+}
+
+function closeNav() {
+  document.documentElement.style.setProperty('--sidebar-open', '0');
+  document.getElementById('sidebar').classList.remove('open');
+}
