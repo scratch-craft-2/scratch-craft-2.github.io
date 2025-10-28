@@ -305,18 +305,19 @@ function copyCode(button) {
 }
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
-    const buttons = document.querySelectorAll('.sidebar button');
-    
-    buttons.forEach(button => {
-        button.addEventListener('click', function() {
-            const targetId = this.getAttribute('data-target');
-            const targetElement = document.getElementById(targetId);
-            
-            targetElement.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-        });
-    });
+ const buttons = document.querySelectorAll('.sidebar button');
+ 
+ buttons.forEach(button => {
+ button.addEventListener('click', function() {
+ const targetId = this.getAttribute('data-target');
+ const targetElement = document.getElementById(targetId);
+ 
+ targetElement.scrollIntoView({
+ behavior: 'smooth',
+ block: 'start'
+ });
+ });
+ });
 });
