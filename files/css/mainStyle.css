@@ -572,13 +572,14 @@ div.part2 {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0; /* Начальная ширина — скрыта */
+  width: var(--sidebar-width);
   height: 100%;
   background-color: #333;
   overflow-x: hidden;
   transition: width 0.5s;
   padding-top: 60px;
   z-index: 1000;
+  opacity: var(--sidebar-visible); /* Управление видимостью */
 }
 
 .panelcontent {
