@@ -28,7 +28,7 @@
 
 :root {
   --sidebar-width: 250px;
-  --sidebar-open: 0; /* 0 = закрыта, 1 = открыта */
+  --sidebar-visible: 1; /* 1 = видна, 0 = скрыта */
 }
 
 div.tutorial {
@@ -506,20 +506,20 @@ div.part2 {
 
 /* Адаптивные размеры */
 @media (max-width: 1200px) {
-  .code-block { width: calc(70% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
+  .code-block { width: calc(70% - (var(--sidebar-visible) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 992px) {
-  .code-block { width: calc(80% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
+  .code-block { width: calc(80% - (var(--sidebar-visible) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 768px) {
-  .code-block { width: calc(90% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
+  .code-block { width: calc(90% - (var(--sidebar-visible) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 576px) {
   .code-block { 
-    width: width: calc(100% - (var(--sidebar-open) * (var(--sidebar-width) / 2)));; 
+    width: width: calc(100% - (var(--sidebar-visible) * (var(--sidebar-width) / 2)));; 
     margin: 1rem;
     border-radius: 6px;
   }
@@ -587,7 +587,7 @@ div.part2 {
 }
 
 .panelcontent {
-  margin-left: calc(var(--sidebar-open) * var(--sidebar-width));
+  margin-left: calc(var(--sidebar-visible) * var(--sidebar-width));
   padding: 20px;
   transition: margin-left 0.5s;
 }
