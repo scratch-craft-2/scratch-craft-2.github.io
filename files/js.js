@@ -331,22 +331,24 @@ document.addEventListener('DOMContentLoaded', function() {
   let lastScrollY = 0;
   let isHovered = false;
 
-  // Функция обновления переменной --sidebar-visible
-  function updateVisibility() {
+  function updateState() {
     const scrollY = window.scrollY;
 
-    // Если курсор над панелью — показываем
+    // Если курсор над панелью — не скрываем
     if (isHovered) {
+      sidebar.classList.remove('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '1');
       return;
     }
 
-    // Прокрутка вниз → скрываем
+    // Прокрутка вниз → скрываем (добавляем класс)
     if (scrollY > lastScrollY) {
+      sidebar.classList.add('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '0');
     }
-    // Прокрутка вверх → показываем
+    // Прокрутка вверх → показываем (убираем класс)
     else if (scrollY < lastScrollY) {
+      sidebar.classList.remove('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '1');
     }
 
@@ -356,17 +358,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // События наведения
   sidebar.addEventListener('mouseenter', () => {
     isHovered = true;
-    updateVisibility();
+    updateState();
   });
 
   sidebar.addEventListener('mouseleave', () => {
     isHovered = false;
-    updateVisibility();
+    updateState();
   });
 
   // Событие прокрутки
-  window.addEventListener('scroll', updateVisibility);
+  window.addEventListener('scroll', updateState);
 
   // Инициализация
-  updateVisibility();
+  updateState();
 });
