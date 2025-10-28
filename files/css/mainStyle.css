@@ -84,6 +84,8 @@ div.nav {
     align-items: center;
     justify-content: center;
     padding: 0 20px;
+    z-index: 1001;
+    position: fixed;    
 }
 
 @keyframes nav-pic_img_animation {
@@ -523,3 +525,56 @@ div.part2 {
     font-size: 0.75rem;
   }
 }
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100vh;
+    width: 200px;
+    background-color: #ced8e3;
+    color: white;
+    overflow-y: auto;
+    z-index: 1000;
+    transition: transform 0.3s ease;
+}
+
+/* Скрываем на маленьких экранах */
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+}
+
+.sidebar-content {
+    padding: 20px;
+}
+
+.sidebar button {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 10px;
+    background-color: #95a3b4;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+    transition: background-color 0.3s;
+}
+
+.sidebar button:hover {
+    background-color: #1abc9c;
+}
+
+@media (max-width: 1100px) {
+    .content {
+        margin-left: 0;
+        padding: 20px;
+    }
+}
+
+.page-section {
+}
+</style>
