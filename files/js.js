@@ -307,83 +307,49 @@ function copyCode(button) {
 
 
 document.addEventListener('DOMContentLoaded', function() {
- const buttons = document.querySelectorAll('.sidebar button');
- 
- buttons.forEach(button => {
- button.addEventListener('click', function() {
- const targetId = this.getAttribute('data-target');
- const targetElement = document.getElementById(targetId);
- 
- targetElement.scrollIntoView({
- behavior: 'smooth',
- block: 'start'
- });
- });
- });
-});
-
-
-
-
-
-document.addEventListener('DOMContentLoaded', function() {
-  // Получаем элемент панели по классу
   const sidebar = document.querySelector('.sidebar');
-  
-  // Проверяем, что элемент найден
+
   if (!sidebar) {
     console.error('Элемент .sidebar не найден в DOM');
     return;
   }
 
-  // Переменные для отслеживания состояния
-  let lastScrollY = 0;      // Предыдущая позиция прокрутки
-  let isHovered = false;    // Наведён ли курсор на панель
+  let lastScrollY = 0;
+  let isHovered = false;
 
-  /**
-   * Функция обновления состояния панели
-   */
   function updateSidebarState() {
-    const currentScrollY = window.scrollY; // Текущая позиция прокрутки
+    const currentScrollY = window.scrollY;
 
-    // Если курсор на панели — всегда показываем
+    // ГЛАВНОЕ: если курсор на панели — показываем ВСЕГДА
     if (isHovered) {
       sidebar.classList.remove('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '1');
-      return;
+      return; // Прерываем выполнение, игнорируя логику прокрутки
     }
 
-    // Прокрутка вниз → скрываем панель
+    // Логика для прокрутки (работает только если курсор НЕ на панели)
     if (currentScrollY > lastScrollY) {
       sidebar.classList.add('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '0');
-    }
-    // Прокрутка вверх → показываем панель
-    else if (currentScrollY < lastScrollY) {
+    } else if (currentScrollY < lastScrollY) {
       sidebar.classList.remove('hidden');
       document.documentElement.style.setProperty('--sidebar-visible', '1');
     }
 
-    // Обновляем предыдущую позицию прокрутки
     lastScrollY = currentScrollY;
   }
 
   // Обработчики событий
-  // Наведение курсора на панель
   sidebar.addEventListener('mouseenter', () => {
     isHovered = true;
-    updateSidebarState();
+    updateSidebarState(); // Мгновенно показываем при наведении
   });
 
-  // Уход курсора с панели
   sidebar.addEventListener('mouseleave', () => {
     isHovered = false;
-    updateSidebarState();
+    updateSidebarState(); // Возвращаем логику прокрутки при уходе курсора
   });
 
-  // Прокрутка страницы
   window.addEventListener('scroll', updateSidebarState);
-
-  // Инициализация состояния при загрузке страницы
-  updateSidebarState();
+  updateSidebarState(); // Инициализация
 });
