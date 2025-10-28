@@ -639,3 +639,20 @@ header::after {
   transform: translateX(0) !important;
   opacity: 1 !important;
 }
+
+.sidebar::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: all; /* Разрешаем события мыши */
+  z-index: -1; /* Чтобы не перекрывать контент */
+}
+
+/* Для скрытой панели — расширяем зону наведения за пределы экрана */
+.sidebar.hidden::before {
+  left: -100%; /* Зона простирается влево от экрана */
+}
+
