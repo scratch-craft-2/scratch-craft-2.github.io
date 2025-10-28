@@ -325,28 +325,29 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+
 document.addEventListener('DOMContentLoaded', function() {
   const sidebar = document.querySelector('.sidebar');
   let lastScrollY = 0;
   let isHovered = false;
 
-  // Функция управления видимостью
-  function updateSidebarVisibility() {
+  // Функция обновления переменной --sidebar-visible
+  function updateVisibility() {
     const scrollY = window.scrollY;
 
-    // Если курсор над панелью — не скрываем
+    // Если курсор над панелью — показываем
     if (isHovered) {
-      sidebar.classList.remove('hidden');
+      document.documentElement.style.setProperty('--sidebar-visible', '1');
       return;
     }
 
     // Прокрутка вниз → скрываем
     if (scrollY > lastScrollY) {
-      sidebar.classList.add('hidden');
+      document.documentElement.style.setProperty('--sidebar-visible', '0');
     }
     // Прокрутка вверх → показываем
     else if (scrollY < lastScrollY) {
-      sidebar.classList.remove('hidden');
+      document.documentElement.style.setProperty('--sidebar-visible', '1');
     }
 
     lastScrollY = scrollY;
@@ -355,18 +356,17 @@ document.addEventListener('DOMContentLoaded', function() {
   // События наведения
   sidebar.addEventListener('mouseenter', () => {
     isHovered = true;
-    sidebar.classList.remove('hidden');
+    updateVisibility();
   });
 
   sidebar.addEventListener('mouseleave', () => {
     isHovered = false;
-    updateSidebarVisibility(); // Перепроверяем после ухода курсора
+    updateVisibility();
   });
 
   // Событие прокрутки
-  window.addEventListener('scroll', updateSidebarVisibility);
+  window.addEventListener('scroll', updateVisibility);
 
   // Инициализация
-  updateSidebarVisibility();
+  updateVisibility();
 });
-
