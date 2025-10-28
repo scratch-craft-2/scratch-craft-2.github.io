@@ -607,6 +607,12 @@ div.part2 {
   width: 0;
 }
 
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
 /* Мгновенный показ при наведении */
 .sidebar:hover {
   transform: translateX(0) !important;
