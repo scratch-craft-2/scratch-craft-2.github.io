@@ -628,3 +628,14 @@ header::after {
   display: block;
   height: 80px;
 }
+
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+.sidebar:hover {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
