@@ -567,7 +567,6 @@ div.part2 {
         padding: 20px;
     }
 }
-
 .sidebar {
   position: fixed;
   top: 0;
@@ -576,35 +575,43 @@ div.part2 {
   height: 100%;
   background-color: #ced8e3;
   overflow-x: hidden;
-  transition: width 0.5s;
   padding-top: 60px;
   z-index: 1000;
-   transform: translateX(0);
-  opacity: 1;
+  
+  /* Единое transition-свойство */
   transition: 
     transform 0.4s ease-out,
-    opacity 0.4s ease-out;
+    opacity 0.4s ease-out,
+    width 0.4s ease-out;
+  
+  transform: translateX(0);
+  opacity: 1;
 }
 
 .panelcontent {
   margin-left: calc(var(--sidebar-visible) * var(--sidebar-width));
   padding: 20px;
-  transition: margin-left 0.5s;
+  transition: margin-left 0.4s ease-out;
 }
 
+/* Состояние: панель открыта (полная ширина) */
 .sidebar.open {
   width: var(--sidebar-width);
 }
 
+/* Состояние: скрыта (сдвиг + прозрачность) */
 .sidebar.hidden {
   transform: translateX(-100%);
   opacity: 0;
+  /* width тоже уменьшаем, чтобы не мешать transition */
+  width: 0;
 }
 
-/* Мгновенный показ при наведении (даже если скрыта) */
+/* Мгновенный показ при наведении */
 .sidebar:hover {
   transform: translateX(0) !important;
   opacity: 1 !important;
+  width: var(--sidebar-width) !important; /* Для consistency */
 }
 
 header {
