@@ -574,12 +574,16 @@ div.part2 {
   left: 0;
   width: var(--sidebar-width);
   height: 100%;
-  background-color: #333;
+  background-color: #ced8e3;
   overflow-x: hidden;
   transition: width 0.5s;
   padding-top: 60px;
   z-index: 1000;
-  opacity: var(--sidebar-visible); /* Управление видимостью */
+   transform: translateX(0);
+  opacity: 1;
+  transition: 
+    transform 0.4s ease-out,
+    opacity 0.4s ease-out;
 }
 
 .panelcontent {
@@ -591,6 +595,18 @@ div.part2 {
 .sidebar.open {
   width: var(--sidebar-width);
 }
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+  opacity: 0;
+}
+
+/* Мгновенный показ при наведении (даже если скрыта) */
+.sidebar:hover {
+  transform: translateX(0) !important;
+  opacity: 1 !important;
+}
+
 header {
   position: relative; /* Важно для корректной работы */
 }
