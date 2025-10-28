@@ -577,3 +577,13 @@ div.part2 {
 
 .page-section {
 }
+
+header {
+  position: relative; /* Важно для корректной работы */
+}
+header::after {
+  content: '';
+  display: block;
+  height: 100px; /* Высота фиксированного элемента */
+  margin-bottom: 20px;
+}
