@@ -323,12 +323,29 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 
-function openNav() {
-  document.documentElement.style.setProperty('--sidebar-open', '1');
-  document.getElementById('sidebar').classList.add('open');
-}
 
-function closeNav() {
-  document.documentElement.style.setProperty('--sidebar-open', '0');
-  document.getElementById('sidebar').classList.remove('open');
-}
+
+document.addEventListener('DOMContentLoaded', function() {
+  let lastScrollY = 0;
+
+  function updateSidebarVisibility() {
+    const scrollY = window.scrollY;
+
+    // Прокрутка вниз → скрываем панель
+    if (scrollY > lastScrollY) {
+      document.documentElement.style.setProperty('--sidebar-visible', '0');
+    }
+    // Прокрутка вверх → показываем панель
+    else if (scrollY < lastScrollY) {
+      document.documentElement.style.setProperty('--sidebar-visible', '1');
+    }
+
+    lastScrollY = scrollY;
+  }
+
+  // Слушаем событие прокрутки
+  window.addEventListener('scroll', updateSidebarVisibility);
+
+  // Инициализация при загрузке
+  updateSidebarVisibility();
+});
