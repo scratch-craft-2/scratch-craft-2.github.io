@@ -326,26 +326,47 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 document.addEventListener('DOMContentLoaded', function() {
+  const sidebar = document.querySelector('.sidebar');
   let lastScrollY = 0;
+  let isHovered = false;
 
+  // Функция управления видимостью
   function updateSidebarVisibility() {
     const scrollY = window.scrollY;
 
-    // Прокрутка вниз → скрываем панель
-    if (scrollY > lastScrollY) {
-      document.documentElement.style.setProperty('--sidebar-visible', '0');
+    // Если курсор над панелью — не скрываем
+    if (isHovered) {
+      sidebar.classList.remove('hidden');
+      return;
     }
-    // Прокрутка вверх → показываем панель
+
+    // Прокрутка вниз → скрываем
+    if (scrollY > lastScrollY) {
+      sidebar.classList.add('hidden');
+    }
+    // Прокрутка вверх → показываем
     else if (scrollY < lastScrollY) {
-      document.documentElement.style.setProperty('--sidebar-visible', '1');
+      sidebar.classList.remove('hidden');
     }
 
     lastScrollY = scrollY;
   }
 
-  // Слушаем событие прокрутки
+  // События наведения
+  sidebar.addEventListener('mouseenter', () => {
+    isHovered = true;
+    sidebar.classList.remove('hidden');
+  });
+
+  sidebar.addEventListener('mouseleave', () => {
+    isHovered = false;
+    updateSidebarVisibility(); // Перепроверяем после ухода курсора
+  });
+
+  // Событие прокрутки
   window.addEventListener('scroll', updateSidebarVisibility);
 
-  // Инициализация при загрузке
+  // Инициализация
   updateSidebarVisibility();
 });
+
