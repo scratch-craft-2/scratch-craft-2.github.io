@@ -25,7 +25,12 @@
             color: #fff;
    }
 }
-   
+
+:root {
+  --sidebar-width: 250px;
+  --sidebar-open: 0; /* 0 = закрыта, 1 = открыта */
+}
+
 div.tutorial {
     border-color: #575e75;
     border-width: 3.3px;
@@ -501,20 +506,20 @@ div.part2 {
 
 /* Адаптивные размеры */
 @media (max-width: 1200px) {
-  .code-block { width: 70%; }
+  .code-block { width: calc(70% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 992px) {
-  .code-block { width: 80%; }
+  .code-block { width: calc(80% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 768px) {
-  .code-block { width: 90%; }
+  .code-block { width: calc(90% - (var(--sidebar-open) * (var(--sidebar-width) / 2))); }
 }
 
 @media (max-width: 576px) {
   .code-block { 
-    width: 100%; 
+    width: width: calc(100% - (var(--sidebar-open) * (var(--sidebar-width) / 2)));; 
     margin: 1rem;
     border-radius: 6px;
   }
@@ -526,18 +531,6 @@ div.part2 {
   }
 }
 
-.sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    width: 200px;
-    background-color: #ced8e3;
-    color: white;
-    overflow-y: auto;
-    z-index: 1000;
-    transition: transform 0.3s ease;
-}
 
 /* Скрываем на маленьких экранах */
 @media (max-width: 768px) {
@@ -575,9 +568,28 @@ div.part2 {
     }
 }
 
-.page-section {
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0; /* Начальная ширина — скрыта */
+  height: 100%;
+  background-color: #333;
+  overflow-x: hidden;
+  transition: width 0.5s;
+  padding-top: 60px;
+  z-index: 1000;
 }
 
+.panelcontent {
+  margin-left: calc(var(--sidebar-open) * var(--sidebar-width));
+  padding: 20px;
+  transition: margin-left 0.5s;
+}
+
+.sidebar.open {
+  width: var(--sidebar-width);
+}
 header {
   position: relative; /* Важно для корректной работы */
 }
