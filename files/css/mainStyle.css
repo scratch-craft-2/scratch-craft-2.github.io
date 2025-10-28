@@ -584,6 +584,5 @@ header {
 header::after {
   content: '';
   display: block;
-  height: 100px; /* Высота фиксированного элемента */
-  margin-bottom: 20px;
+  height: 80px;
 }
