@@ -47,6 +47,7 @@ div.tutorial {
     display: flex;
     align-items: center;
     justify-content: center;
+    user-select: none; 
     font-size: 30px
 }
 @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
@@ -54,6 +55,41 @@ div.tutorial {
 div.textNorm {
 font-size: 16px;
 }
+
+
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+    border-right:1px solid #bbb;
+}
+
+li:last-child {
+    border-right: none;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 6px 18px;
+    text-decoration: none;
+}
+
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
 
 div.tutorialdark {
     border-color: #8c85b4;
@@ -83,7 +119,6 @@ div.nav {
     background-image: url("https://tochka-school.ru/themes/school-point/assets/img/discount-august/bg.png");
     height: 60px;
     color: #FFFFFF;
-    box-shadow: 0px 1px 10px -3px #000000;
     width: calc(100% - 40px);
     display: flex;
     align-items: center;
@@ -133,6 +168,10 @@ body {
     color: hsl(225deg 15% 40%);
     margin: 0;
 } 
+
+img {
+user-select: none; 
+}
 
 body.normbody {
     font-family: "Noto Sans", sans-serif;
@@ -337,6 +376,8 @@ div.content_group.contributors-listdark {
           text-decoration: none;
           transition: 0.3s linear;
          padding: 15px;
+        user-select: none; 
+
     }
     .button:hover {
           background: var(--button-hov-bg)!important;
@@ -626,7 +667,7 @@ header {
 header::after {
   content: '';
   display: block;
-  height: 80px;
+  height: 60px;
 }
 
 
