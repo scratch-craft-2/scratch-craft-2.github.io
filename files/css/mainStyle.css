@@ -56,41 +56,6 @@ div.textNorm {
 font-size: 16px;
 }
 
-
-ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #333;
-}
-
-li {
-    float: left;
-    border-right:1px solid #bbb;
-}
-
-li:last-child {
-    border-right: none;
-}
-
-li a {
-    display: block;
-    color: white;
-    text-align: center;
-    padding: 6px 18px;
-    text-decoration: none;
-}
-
-li a:hover:not(.active) {
-    background-color: #111;
-}
-
-.active {
-    background-color: #4CAF50;
-}
-
-
 div.tutorialdark {
     border-color: #8c85b4;
     border-width: 3.3px;
@@ -123,6 +88,7 @@ div.nav {
     display: flex;
     align-items: center;
     justify-content: center;
+    box-shadow: 0px 1px 10px -3px #000000;
     padding: 0 20px;
     z-index: 1001;
     position: fixed;    
@@ -667,7 +633,7 @@ header {
 header::after {
   content: '';
   display: block;
-  height: 60px;
+  height: 80px;
 }
 
 
