@@ -315,6 +315,7 @@ div.help {
         padding: 20px;
         width: min(calc(100% - 40px), 880px);
         flex-direction: row; 
+        flex-wrap: wrap;
     }
 div.content_group.contributors-listdark {
     display: flex;
