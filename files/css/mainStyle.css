@@ -313,7 +313,7 @@ div.help {
         border: 3.5px solid #575e75;
         border-radius: 10px;
         padding: 20px;
-        width: min(calc(100% - 40px), 800px);
+        width: min(calc(100% - 40px), 880px);
         flex-direction: row; 
     }
 div.content_group.contributors-listdark {
