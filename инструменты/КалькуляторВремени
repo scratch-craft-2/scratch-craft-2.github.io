@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Калькулятор прошедшего времени</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #333;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #444;
+            font-size: 24px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .results {
+            margin-top: 30px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            border-left: 4px solid #667eea;
+        }
+
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .result-item:last-child {
+            border-bottom: none;
+        }
+
+        .value {
+            font-weight: 700;
+            color: #667eea;
+        }
+
+        .unit {
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                margin: 10px;
+                padding: 20px;
+            }
+            h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Калькулятор прошедшего времени</h1>
+
+        <div class="form-group">
+            <label for="timezone">Часовой пояс</label>
+            <select id="timezone">
+                <option value="UTC">UTC (Всемирное координированное время)</option>
+                <option value="Europe/Moscow">Москва (UTC+3)</option>
+                <option value="America/New_York">Нью-Йорк (UTC-5)</option>
+                <option value="Asia/Tokyo">Токио (UTC+9)</option>
+                <option value="Australia/Sydney">Сидней (UTC+11)</option>
+                <!-- Можно добавить больше часовых поясов -->
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="date">Дата и время (ДД.ММ.ГГГГ ЧЧ:ММ)</label>
+            <input type="text" id="date" placeholder="01.01.2000 12:00">
+        </div>
+
+        <div class="results" id="results">
+            <div class="result-item">
+                <span>Всего прошло:</span>
+                <span class="value" id="total">—</span>
+            </div>
+            <div class="result-item">
+                <span>Лет:</span>
+                <span class="value" id="years">—</span>
+            </div>
+            <div class="result-item">
+                <span>Десятилетий:</span>
+                <span class="value" id="decades">—</span>
+            </div>
+            <div class="result-item">
+                <span>Месяцев:</span>
+                <span class="value" id="months">—</span>
+            </div>
+            <div class="result-item">
+                <span>Дней:</span>
+                <span class="value" id="days">—</span>
+            </div>
+            <div class="result-item">
+                <span>Часов:</span>
+                <span class="value" id="hours">—</span>
+            </div>
+            <div class="result-item">
+                <span>Минут:</span>
+                <span class="value" id="minutes">—</span>
+            </div>
+            <div class="result-item">
+                <span>Секунд:</span>
+                <span class="value" id="seconds">—</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Основные функции расчёта времени
+        function parseDateString(dateStr) {
+            const [datePart, timePart] = dateStr.trim().split(' ');
+            const [day, month, year] = datePart.split('.').map(Number);
+            const [hour, minute] = timePart ? timePart.split(':').map(Number) : [0, 0];
+            
+            // JavaScript month is 0-based
+            return new Date(Date.UTC(year, month - 1, day, hour, minute));
+        }
+
+        function calculateTimeDiff(startDate, currentDate) {
+            const diffMs = currentDate - startDate;
+            const seconds = Math.floor(diffMs / 1000);
+            const minutes = Math.floor(seconds / 60);
+            const hours = Math.floor(minutes / 60);
+            const days = Math.floor(hours / 24);
+            
+            let years = 0;
+            let months = 0;
+            let tempDate = new Date(startDate);
+            
+            while (tempDate < currentDate) {
+                tempDate.setMonth(tempDate.getMonth() + 1);
+                if (tempDate <= currentDate) {
+                    months++;
+                    if (months % 12 === 0) {
+                        years++;
+                    }
+                } else {
+                    break;
+                }
+            }
+
+            const decades = Math.floor(years / 10);
+
+            return {
+                total: formatDuration(seconds),
+                years,
+                decades,
+                months,
+                days,
+                hours,
+                minutes,
+                seconds
+            };
+        }
+
+        function formatDuration(totalSeconds) {
+            const years = Math.floor(totalSeconds / (365 * 24 * 60 * 60));
+            const remainderYears = totalSeconds % (365 * 24 * 60 * 60);
+            
+            const months = Math.floor(remainderYears / (30 * 24 * 60 * 60));
+            const remainderMonths = remainderYears % (30 * 24 * 60 * 60);
+            
+            const days = Math.floor(remainderMonths / (24 * 60 * 60));
+            const remainderDays = remainderMonths % (24 * 60 * 60);
+            
+            const hours = Math.floor(remainderDays / (60 * 60));
+            const remainderHours = remainderDays % (60 * 60);
+            
+            const minutes = Math.floor(remainderHours / 60);
+            const seconds = remainderHours % 60;
+
+            return `${years > 0 ? years + ' лет ' : ''}${
+                months > 0 ? months + ' мес. ' : ''}${
+                days > 0 ? days + ' дн. ' : ''}${
+                hours > 0 ? hours + ' ч. ' : ''}${
+                minutes > 0 ? minutes + ' мин. ' : ''}${
+                seconds} сек.`;
+        }
+
+        // Функция обновления результатов
+        function updateResults() {
+            try {
+                const timezone = document.getElementById('timezone').value;
+                const dateInput = document.getElementById('date').value || '01.01.2000 12:00';
+                
+                // Создаём дату в указанном часовом поясе
+                const startDate = parseDateString(dateInput);
+                const currentDate = new Date(new Date().toLocaleString('en-US', { timeZone: timezone }));
+                
+                const result = calculateTimeDiff(startDate, currentDate);
+                
+                document.getElementById('total').textContent = result.total;
+                document.getElementById('years').textContent = result.years;
+                document.getElementById('decades').textContent = result.decades;
+                document.getElementById('months').textContent = result.months;
+                document.getElementById('days').textContent = result.days;
+                document.getElementById('hours').textContent = result.hours;
+                document.getElementById('minutes').textContent = result.minutes;
+                document.getElementById('seconds').textContent = result.seconds;
+            } catch (error) {
+                console.error('Ошибка при расчёте времени:', error);
+            }
+        }
+
+        // Инициализация и обновление каждые секунду
+        document.addEventListener('DOMContentLoaded', () => {
+            // Устанавливаем значение по умолчанию для даты
+            const dateInput = document.getElementById('date');
+            if (!dateInput.value) {
+                dateInput.value = '01.01.2000 12:00';
+            }
+            
+            // Обновляем результаты сразу при загрузке
+            updateResults();
+            
+            // Обновляем каждую секунду
+            setInterval(updateResults, 1000);
+            
+            // Пересчитываем при изменении полей
+            document.getElementById('timezone').addEventListener('change', updateResults);
+            document.getElementById('date').addEventListener('input', updateResults);
+        });
+    </script>
+</body>
+</html>
