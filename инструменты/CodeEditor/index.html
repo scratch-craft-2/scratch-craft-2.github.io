@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Онлайн Редактор Кода</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/theme/material-darker.min.css">
+
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Общие стили и фон */
+        :root {
+            --editor-bg: #212121; /* Тёмно-синий/тёмный фон */
+            --console-bg: #1e1e1e;
+            --text-color: #f8f8f2; /* Белый/светлый цвет текста */
+            --accent-color: #007bff;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--editor-bg);
+            color: var(--text-color);
+            overflow: hidden;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* Шапка и кнопки */
+        header {
+            background-color: #333;
+            color: white;
+            padding: 10px 20px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            flex-shrink: 0;
+        }
+
+        header select, header button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        header button {
+            background-color: var(--accent-color);
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        header button:hover {
+            background-color: #0056b3;
+        }
+        
+        /* Разделение редактора и вывода */
+        #editor-and-output {
+            display: flex;
+            flex-grow: 1;
+            overflow: hidden;
+        }
+
+        #editor-area {
+            flex: 1;
+            position: relative;
+            background-color: var(--editor-bg);
+            border-right: 1px solid #333;
+        }
+        
+        /* Стилизация CodeMirror (Редактора) */
+        .CodeMirror {
+            height: 100%;
+            font-size: 16px;
+            border: none !important; 
+            font-family: 'JetBrains Mono', monospace; 
+            background-color: var(--editor-bg) !important; 
+            color: var(--text-color); 
+        }
+        
+        .CodeMirror-lines {
+            color: var(--text-color);
+        }
+        .CodeMirror-gutters {
+            background-color: var(--editor-bg) !important;
+            border-right: 1px solid #3c3c3c;
+        }
+        .CodeMirror-linenumber {
+            color: #6a9955; 
+        }
+
+        /* Область вывода */
+        #output-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border-left: 5px solid var(--accent-color);
+        }
+
+        #output-title {
+            background-color: #2c2c2c;
+            color: white;
+            padding: 5px 10px;
+            font-size: 12px;
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+        
+        /* Стили для iframe и пустой области (консоль всегда скрыта) */
+        #preview-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background-color: white;
+        }
+
+        #empty-output {
+            flex: 1;
+            width: 100%;
+            background-color: var(--editor-bg);
+            color: #666;
+            padding: 20px;
+            text-align: center;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <select id="language-selector">
+                <option value="htmlmixed" selected>HTML/CSS/JS</option>
+                <option value="python">Python</option>
+                <option value="go">Go</option>
+                <option value="java">Java</option>
+                <option value="clike-c">C</option>
+                <option value="clike-cpp">C++</option>
+                <option value="javascript">JavaScript</option>
+                <option value="clike-csharp">C#</option>
+                <option value="ruby">Ruby</option>
+                <option value="php">PHP</option>
+                <option value="sql">SQL</option>
+                <option value="rust">Rust</option>
+            </select>
+            <button id="runButton" onclick="runCode()">Запустить</button>
+            <button onclick="saveCode()">Сохранить</button>
+            <input type="file" id="loadFile" style="display: none;" onchange="loadCode(event)">
+            <button onclick="document.getElementById('loadFile').click()">Загрузить</button>
+        </header>
+        
+        <div id="editor-and-output">
+            <div id="editor-area">
+                <textarea id="code-editor"></textarea>
+            </div>
+            
+            <div id="output-area">
+                <div id="output-title">Результат (iframe)</div>
+                <iframe id="preview-iframe"></iframe>
+                <div id="empty-output" style="display: none;">
+                    Для выбранного языка функция запуска кода на стороне клиента не предусмотрена.
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/xml/xml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/css/css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/htmlmixed/htmlmixed.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/go/go.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/clike/clike.min.js"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/ruby/ruby.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/php/php.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/sql/sql.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/rust/rust.min.js"></script>
+
+    <script>
+        let editor;
+        let currentLanguage = 'htmlmixed';
+        
+        // --- 1. Утилиты: Получение режима CodeMirror ---
+        function getEditorMode(lang) {
+            switch (lang) {
+                case 'python': return 'python';
+                case 'go': return 'go';
+                case 'javascript': return 'javascript';
+                case 'ruby': return 'ruby';
+                case 'php': return 'php';
+                case 'sql': return 'sql';
+                case 'rust': return 'rust';
+                case 'clike-c': return 'text/x-csrc'; 
+                case 'clike-cpp': return 'text/x-c++src'; 
+                case 'clike-csharp': return 'text/x-csharp'; 
+                case 'java': return 'text/x-java'; 
+                case 'htmlmixed':
+                default: return 'htmlmixed';
+            }
+        }
+        
+        // --- 2. Утилиты: Обновление области вывода и кнопок ---
+        function updateUI(lang) {
+            const isClientSide = lang === 'htmlmixed';
+            const runButton = document.getElementById('runButton');
+            const outputTitle = document.getElementById('output-title');
+            const previewIframe = document.getElementById('preview-iframe');
+            const emptyOutput = document.getElementById('empty-output');
+
+            // 2.1 Управление видимостью кнопки "Запустить"
+            runButton.style.display = isClientSide ? 'block' : 'none';
+            
+            // 2.2 Управление областью вывода
+            if (isClientSide) {
+                outputTitle.style.display = 'block';
+                outputTitle.textContent = 'Результат (iframe)';
+                previewIframe.style.display = 'block';
+                emptyOutput.style.display = 'none';
+            } else {
+                outputTitle.style.display = 'none'; // Скрываем заголовок
+                previewIframe.style.display = 'none';
+                emptyOutput.style.display = 'flex';
+            }
+        }
+
+        // --- 3. Инициализация Редактора ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const initialCode = `<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { 
+            background: #f0f8ff; 
+            font-family: 'JetBrains Mono', monospace; 
+            color: #333;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Онлайн Редактор</h1>
+    <p>Код HTML/CSS/JS будет отображен здесь.</p>
+</body>
+</html>`;
+
+            editor = CodeMirror.fromTextArea(document.getElementById('code-editor'), {
+                mode: 'htmlmixed',
+                theme: 'material-darker',
+                lineNumbers: true,
+                autoCloseTags: true,
+                matchBrackets: true,
+                indentUnit: 4
+            });
+
+            editor.setValue(initialCode);
+            updateUI(currentLanguage); // Инициализация UI
+            runCode(); // Запустить начальный код
+        });
+
+        // --- 4. Переключение Языков ---
+        document.getElementById('language-selector').addEventListener('change', (e) => {
+            currentLanguage = e.target.value;
+            editor.setOption("mode", getEditorMode(currentLanguage));
+            updateUI(currentLanguage);
+        });
+
+        // --- 5. Запуск Кода (Run Code) ---
+        function runCode() {
+            // Эта функция вызывается ТОЛЬКО при нажатии кнопки "Запустить",
+            // которая видна ТОЛЬКО для HTML/CSS/JS.
+            if (currentLanguage === 'htmlmixed') {
+                const code = editor.getValue();
+                const preview = document.getElementById('preview-iframe').contentWindow.document;
+                
+                preview.open();
+                preview.write(code); 
+                preview.close();
+            }
+        }
+        
+        // --- 6. Сохранение Кода (Save Code) ---
+        function saveCode() {
+            const code = editor.getValue();
+            let extension;
+            switch(currentLanguage) {
+                case 'python': extension = 'py'; break;
+                case 'go': extension = 'go'; break;
+                case 'javascript': extension = 'js'; break;
+                case 'clike-c': extension = 'c'; break;
+                case 'clike-cpp': extension = 'cpp'; break;
+                case 'clike-csharp': extension = 'cs'; break;
+                case 'java': extension = 'java'; break;
+                case 'ruby': extension = 'rb'; break;
+                case 'php': extension = 'php'; break;
+                case 'sql': extension = 'sql'; break;
+                case 'rust': extension = 'rs'; break;
+                case 'htmlmixed': 
+                default: extension = 'html'; break;
+            }
+            
+            const filename = `code.${extension}`;
+            const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
+            
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(a.href);
+        }
+        
+        // --- 7. Загрузка Кода (Load Code) ---
+        function loadCode(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                editor.setValue(e.target.result);
+                
+                // Попытка угадать язык по расширению файла
+                const ext = file.name.split('.').pop().toLowerCase();
+                let newLang = 'htmlmixed';
+                
+                if (ext === 'py') newLang = 'python';
+                else if (ext === 'go') newLang = 'go';
+                else if (ext === 'js') newLang = 'javascript';
+                else if (ext === 'c') newLang = 'clike-c';
+                else if (ext === 'cpp' || ext === 'cxx') newLang = 'clike-cpp';
+                else if (ext === 'cs') newLang = 'clike-csharp';
+                else if (ext === 'java') newLang = 'java';
+                else if (ext === 'rb') newLang = 'ruby';
+                else if (ext === 'php') newLang = 'php';
+                else if (ext === 'sql') newLang = 'sql';
+                else if (ext === 'rs') newLang = 'rust';
+
+                document.getElementById('language-selector').value = newLang;
+                
+                // Запуск события change для обновления UI
+                document.getElementById('language-selector').dispatchEvent(new Event('change'));
+            };
+            reader.readAsText(file);
+        }
+    </script>
+
+</body>
+</html>
