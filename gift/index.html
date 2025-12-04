@@ -35,6 +35,9 @@ const downloadUrl = (url, file) => {
   link.remove();
 };
 switch (new URLSearchParams(location.search).get("giftcode")) {
+case "Happy2026":
+    downloadUrl("/files/тут_ниче_интересного_нет_реально_/2026.sb3", "2026.sb3");
+    break
 case "2026":
     downloadUrl("/files/тут_ниче_интересного_нет_реально_/Christmas tree.svg", "Christmas tree.svg");
     break
