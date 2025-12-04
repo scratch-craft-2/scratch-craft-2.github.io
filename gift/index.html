@@ -35,6 +35,9 @@ const downloadUrl = (url, file) => {
   link.remove();
 };
 switch (new URLSearchParams(location.search).get("giftcode")) {
+case "2026":
+    downloadUrl("/files/тут_ниче_интересного_нет_реально_/Christmas tree.svg", "Christmas tree.svg");
+    break
 case "ymnikisSunny31avgyst":
      function is31avgth() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 31;} 
     if (is31avgth()) { downloadUrl("/files/403/Умникис солнца.svg", "Солничный умникис - с днем конца лета.svg")} else {alert("Данный подарок доступен к получению только в определенный день года")};
