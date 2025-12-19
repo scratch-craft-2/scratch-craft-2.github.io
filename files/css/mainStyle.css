@@ -12,7 +12,8 @@ html {
   --ui-main-90: hsl(0deg 0% 90%);
   --link-50: hsl(30deg 100% 50%);
   --link-90: hsl(30deg 100% 90%);
-  --selection-bg: #ff5e6b --text: hsl(225deg 15% 40%);
+  --selection-bg: #ff5e6b;
+  --text: hsl(225deg 15% 40%);
   --sidebar-width: 250px;
   --sidebar-visible: 1;
   --sidebar-bg: #ced8e3;
