@@ -88,7 +88,8 @@ div.nav {
   box-shadow: 0px 1px 10px -3px #000000;
   padding: 0 20px;
   z-index: 1001;
-  position: fixed;
+  position: sticky;
+  top: 0;
 }
 
 img {
@@ -544,11 +545,4 @@ div.part2 {
   margin-left: calc(var(--sidebar-visible) * var(--sidebar-width));
   padding: 20px;
   transition: margin-left 0.4s ease-out;
-}
-
-header {
-  position: relative;
-}
-header::after {
-  content: "";
 }
