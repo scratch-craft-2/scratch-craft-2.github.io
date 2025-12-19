@@ -304,11 +304,22 @@ div.content_group.contributors-list > .button.contributor-type1 {
   --button-hov-bg: #cccccc;
   --button-hov-border: #878686;
 }
-
 div.content_group.contributors-list > .button.contributor-type1 > img {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
+}
+div.content_group.contributors-list > .button.contributor-type1:hover > img {
+  animation: 0.5s button-social_anim cubic-bezier(0.07, 0.96, 0.37, 2.07);
+}
+
+@keyframes button-social_anim {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
 }
 
 .buttondark {
