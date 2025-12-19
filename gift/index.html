@@ -1,62 +1,89 @@
-<!DOCTYPE html> 
-<html> 
-  <head> 
-<link rel="stylesheet" href="/files/css/mainStyle.css">
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" href="/files/css/mainStyle.css" />
   </head>
   <body>
-     <div class="nav" 
-"> <a href="/" style=" text-decoration:none;
-    color: #fff !important;
-"><h1 style="
-    padding: 5px;
-    margin: 15px;
-">Сайт scratch_craft_2  - подарки</h1></a>
+    <div class="nav">
+      <a href="/" style="text-decoration: none; color: #fff !important"
+        ><b style="font-size: 32px; padding: 5px; margin: 15px"
+          >Сайт scratch_craft_2</b
+        ></a
+      >
     </div>
-<div class="content">
-          <div style="font-size: 50px;">Подарки!</div>
-          <div>Ваш файл-подарок должен автоматически скачатся</div>
-        <div> если нечего не скачивается проверьте правильно ли введен код подарка
-          </div>
-          </div>
-        </div>
+    <div class="content">
+      <div style="font-size: 50px">Подарки!</div>
+      <div>Ваш файл-подарок должен автоматически скачаться</div>
+      <div>
+        Если ничего не скачивается, проверьте, правильно ли введен код подарка
       </div>
-<b>благодарность</b>
-  благодарю денчика что помог мне с кодом сайта, в том числе и этой страницы 
-<a class="link" href="https://dden4ik-12.github.io/">  сайт денчика </a>
-</div>
+    </div>
+    <b>Благодарность</b>
+    Благодарю Денчика что помог мне с кодом сайта, в том числе и этой страницы
+    <a class="link" href="https://dden4ik-12.github.io/"> сайт денчика </a>
+
     <script>
-window.open('https://t.me/creative_programmer');
-const downloadUrl = (url, file) => {
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = file;
-  document.body.appendChild(link);
-  link.click();
-  link.remove();
-};
-switch (new URLSearchParams(location.search).get("giftcode")) {
-case "26":
-    downloadUrl("/files/тут_ниче_интересного_нет_реально_/Все скины умникиса.zip", "Все скины умникиса.zip");
-    break
-case "Happy2026":
-    downloadUrl("/files/тут_ниче_интересного_нет_реально_/2026.sb3", "2026.sb3");
-    break
-case "2026":
-    downloadUrl("/files/тут_ниче_интересного_нет_реально_/Christmas tree.svg", "Christmas tree.svg");
-    break
-case "ymnikisSunny31avgyst":
-     function is31avgth() { const today = new Date(); return today.getMonth() === 7 && today.getDate() === 31;} 
-    if (is31avgth()) { downloadUrl("/files/403/Умникис солнца.svg", "Солничный умникис - с днем конца лета.svg")} else {alert("Данный подарок доступен к получению только в определенный день года")};
-      break
-case "meme1":
-    downloadUrl("/files/403/Шаблон_для_мема__скретч_по_уровням_.svg", "Клевер программируй 2025 апрель.svg");
-    break
-case "2025kleverprog1april":
-    downloadUrl("/files/403/Клевер.svg", "Клевер программируй 2025 апрель.svg");
-    break
-default:
-  alert("Нет подарка по введенному коду, проверьте правильность написание кода. возможно подарок был удален")
-};
-</script> 
+      window.open("https://t.me/creative_programmer");
+      const downloadUrl = (url, file) => {
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = file;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      };
+      switch (new URLSearchParams(location.search).get("giftcode")) {
+        case "26":
+          downloadUrl(
+            "/files/тут_ниче_интересного_нет_реально_/Все скины умникиса.zip",
+            "Все скины умникиса.zip",
+          );
+          break;
+        case "Happy2026":
+          downloadUrl(
+            "/files/тут_ниче_интересного_нет_реально_/2026.sb3",
+            "2026.sb3",
+          );
+          break;
+        case "2026":
+          downloadUrl(
+            "/files/тут_ниче_интересного_нет_реально_/Christmas tree.svg",
+            "Christmas tree.svg",
+          );
+          break;
+        case "ymnikisSunny31avgyst":
+          function is31avgth() {
+            const today = new Date();
+            return today.getMonth() === 7 && today.getDate() === 31;
+          }
+          if (is31avgth()) {
+            downloadUrl(
+              "/files/403/Умникис солнца.svg",
+              "Солничный умникис - с днем конца лета.svg",
+            );
+          } else {
+            alert(
+              "Данный подарок доступен к получению только в определенный день года",
+            );
+          }
+          break;
+        case "meme1":
+          downloadUrl(
+            "/files/403/Шаблон_для_мема__скретч_по_уровням_.svg",
+            "Клевер программируй 2025 апрель.svg",
+          );
+          break;
+        case "2025kleverprog1april":
+          downloadUrl(
+            "/files/403/Клевер.svg",
+            "Клевер программируй 2025 апрель.svg",
+          );
+          break;
+        default:
+          alert(
+            "Нет подарка по введенному коду, проверьте правильность написание кода. возможно подарок был удален",
+          );
+      }
+    </script>
   </body>
 </html>
