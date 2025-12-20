@@ -512,6 +512,27 @@ div.part2 {
   }
 }
 
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: var(--sidebar-width);
+  height: 100%;
+  background-color: #ced8e3;
+  overflow-x: hidden;
+  padding-top: 60px;
+  z-index: 1000;
+  
+  /* Единое transition-свойство */
+  transition: 
+    transform 0.4s ease-out,
+    opacity 0.4s ease-out,
+    width 0.4s ease-out;
+  
+  transform: translateX(0);
+  opacity: 1;
+}
+
 .sidebar-content {
   padding: 20px;
 }
