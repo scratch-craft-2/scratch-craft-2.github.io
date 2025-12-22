@@ -1,6 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
 
-html {
+html { 
   --looks-bg: white;
   --ui-main-20: hsl(0deg 0% 20%);
   --ui-main-30: hsl(0deg 0% 30%);
