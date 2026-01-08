@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Усилитель пароля</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #2c3e50;
+        }
+
+        .input-group {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        #passwordInput {
+            flex: 1;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        #passwordInput:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        #enhanceButton {
+            padding: 12px 20px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+
+        #enhanceButton:hover {
+            background-color: #2980b9;
+        }
+
+        #result {
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #ecf0f1;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            font-family: monospace;
+            word-break: break-all;
+        }
+
+        #feedback {
+            margin-top: 15px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .strong { color: #27ae60; }
+        .good { color: #2ecc71; }
+        .standard { color: #f39c12; }
+        .weak { color: #e74c3c; }
+        .excellent { color: #8e44ad; } /* Для 5–6 баллов */
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Усилитель пароля</h1>
+        <div class="input-group">
+            <input type="text" id="passwordInput" placeholder="Введите пароль">
+            <button id="enhanceButton">Усилить пароль</button>
+        </div>
+        <div id="result"></div>
+        <div id="feedback"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const passwordInput = document.getElementById('passwordInput');
+            const enhanceButton = document.getElementById('enhanceButton');
+            const resultDiv = document.getElementById('result');
+            const feedbackDiv = document.getElementById('feedback');
+
+            enhanceButton.addEventListener('click', function() {
+                const originalPassword = passwordInput.value.trim();
+
+                if (!originalPassword) {
+                    alert('Пожалуйста, введите пароль!');
+                    return;
+                }
+
+                let password = originalPassword;
+                let score = 0;
+
+                // Шаг 1: Проверка наличия @ в исходном пароле
+                if (originalPassword.includes('@')) {
+                    score++;
+                } else {
+                    const vowels = ['a', 'а', 'o', 'о'];
+                    const hasVowels = vowels.some(vowel => password.includes(vowel));
+                    if (hasVowels) {
+                        const vowelPositions = [];
+                        for (let i = 0; i < password.length; i++) {
+                            if (vowels.includes(password[i])) {
+                                vowelPositions.push(i);
+                            }
+                        }
+                        const randomIndex = Math.floor(Math.random() * vowelPositions.length);
+                        password = password.substring(0, vowelPositions[randomIndex]) +
+                                   '@' + password.substring(vowelPositions[randomIndex] + 1);
+                    } else {
+                        const insertPos = Math.floor(Math.random() * (password.length + 1));
+                        password = password.substring(0, insertPos) +
+                           '@' + password.substring(insertPos);
+                    }
+                }
+
+                // Шаг 2: Проверка наличия # и цифр в исходном пароле
+                const hasHash = originalPassword.includes('#');
+                const hasDigits = /\d/.test(originalPassword);
+                if (hasHash && hasDigits) {
+                    score++;
+                }
+
+                if (!hasHash) {
+                    let hasLongSequence = false;
+                    let digitPositions = [];
+                    for (let i = 0; i < password.length; i++) {
+                        if (/\d/.test(password[i])) {
+                            digitPositions.push(i);
+                        }
+                    }
+
+                    if (digitPositions.length > 0) {
+                        let sequences = [];
+                        let currentSequence = [digitPositions[0]];
+                        for (let i = 1; i < digitPositions.length; i++) {
+                            if (digitPositions[i] === digitPositions[i - 1] + 1) {
+                                currentSequence.push(digitPositions[i]);
+                            } else {
+                                sequences.push(currentSequence);
+                                currentSequence = [digitPositions[i]];
+                            }
+                        }
+                        sequences.push(currentSequence);
+
+                        const longSequences = sequences.filter(seq => seq.length >= 3);
+                        if (longSequences.length > 0) {
+                            const targetSequence = longSequences[Math.floor(Math.random() * longSequences.length)];
+                            const replaceIndex = targetSequence[Math.floor(Math.random() * targetSequence.length)];
+                            password = password.substring(0, replaceIndex) +
+                               '#' + password.substring(replaceIndex + 1);
+                            hasLongSequence = true;
+                        } else {
+                            const mediumSequences = sequences.filter(seq => seq.length === 2);
+                            if (mediumSequences.length > 0) {
+                                const targetSequence = mediumSequences[Math.floor(Math.random() * mediumSequences.length)];
+                                const replaceIndex = targetSequence[Math.floor(Math.random() * 2)];
+                                password = password.substring(0, replaceIndex) +
+                           '#' + password.substring(replaceIndex + 1);
+                                hasLongSequence = true;
+                            }
+                        }
+                    }
+
+                    if (!hasLongSequence && digitPositions.length === 0) {
+                        const digit1 = Math.floor(Math.random() * 10);
+                        const digit2 = Math.floor(Math.random() * 10);
+                        password = password + digit1 + '#' + digit2;
+                        hasLongSequence = true;
+                    }
+                }
+
+                // Шаг 3: Замена o/о на 0 или 0 на о (балл всегда)
+                const oPositions = [];
+                for (let i = 0; i < password.length; i++) {
+                    if (password[i] === 'o' || password[i] === 'о') {
+                        oPositions.push(i);
+                    }
+                }
+                                if (oPositions.length > 0) {
+                    const randomIndex = Math.floor(Math.random() * oPositions.length);
+                    password = password.substring(0, oPositions[randomIndex]) +
+                               '0' + password.substring(oPositions[randomIndex] + 1);
+                } else if (password.includes('0')) {
+                    // Если нет o/о, но есть 0 — заменяем 0 на о
+                    const zeroIndex = password.indexOf('0');
+                    password = password.substring(0, zeroIndex) +
+                       'о' + password.substring(zeroIndex + 1);
+                }
+                score++; // Балл за шаг 3 даётся всегда
+
+                // Шаг 4: Проверка длины исходного пароля
+                if (originalPassword.length >= 10) {
+                    score++; // Балл если исходный пароль ≥10 символов
+                } else {
+                    // Дополнение до 10+ символов
+                    while (password.length < 10) {
+                        password += 'x'; // Добавляем символы до длины 10
+                    }
+                }
+
+                // Шаг 5: Проверка регистра букв и специальных символов
+                const hasUpper = /[A-ZA-ЯЁ]/.test(originalPassword);
+                const hasLower = /[a-za-яё]/.test(originalPassword);
+                const hasOtherSpecial = /[^a-za-яёA-ZA-ЯЁ0-9@#]/u.test(originalPassword);
+
+                // Проверка наличия обоих регистров в исходном пароле
+                if (hasUpper && hasLower) {
+                    score++;
+                }
+
+                // Добавление балла за другие специальные символы
+                if (hasOtherSpecial) {
+                    score++;
+                }
+
+                // Модификация регистра, если нужно
+                if (!hasUpper && /[a-za-яё]/.test(password)) {
+                    // Нет верхнего регистра — заменяем случайную букву на верхний
+                    const letterPositions = [];
+                    for (let i = 0; i < password.length; i++) {
+                        if (/[a-za-яё]/.test(password[i])) {
+                            letterPositions.push(i);
+                        }
+                    }
+                    if (letterPositions.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * letterPositions.length);
+                        const char = password[letterPositions[randomIndex]];
+                        password = password.substring(0, letterPositions[randomIndex]) +
+                           char.toUpperCase() +
+                           password.substring(letterPositions[randomIndex] + 1);
+                    }
+                } else if (!hasLower && /[A-ZA-ЯЁ]/.test(password)) {
+                    // Нет нижнего регистра — заменяем случайную заглавную на строчную
+                    const upperPositions = [];
+                    for (let i = 0; i < password.length; i++) {
+                        if (/[A-ZA-ЯЁ]/.test(password[i])) {
+                            upperPositions.push(i);
+                        }
+                    }
+                    if (upperPositions.length > 0) {
+                        const randomIndex = Math.floor(Math.random() * upperPositions.length);
+                        const char = password[upperPositions[randomIndex]];
+                        password = password.substring(0, upperPositions[randomIndex]) +
+                           char.toLowerCase() +
+                           password.substring(upperPositions[randomIndex] + 1);
+                    }
+                }
+
+                // Отображение результата
+                resultDiv.textContent = password;
+
+                // Формирование обратной связи
+                let feedbackText = '';
+                let feedbackClass = '';
+
+                switch (score) {
+                    case 6:
+                    case 5:
+                        feedbackText = '😏 Ваш пароль безумно надёжен, вы так хакеров без работы оставите';
+                        feedbackClass = 'excellent';
+                        break;
+                    case 4:
+                        feedbackText = 'Ваш пароль и так силён💪';
+                        feedbackClass = 'strong';
+                        break;
+                    case 3:
+                        feedbackText = 'Ваш пароль хороший, но мы его улучшили✅';
+                        feedbackClass = 'good';
+                        break;
+                    case 2:
+                        feedbackText = 'Ваш пароль стандартный, а теперь устойчивый🛡️';
+                        feedbackClass = 'standard';
+                        break;
+                    default:
+                        feedbackText = '😨 Ваш пароль безумно легко взломать, может, конечно, он сложный и система ошиблась, но теперь вы точно защищены и можете не бояться хакеров🏆';
+                        feedbackClass = 'weak';
+                }
+
+                feedbackDiv.textContent = feedbackText;
+                feedbackDiv.className = feedbackClass;
+            });
+        });
+    </script>
+</body>
+</html>
