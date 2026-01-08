@@ -249,53 +249,53 @@
                     }
                 }
 
-                // Шаг 5: Проверка регистра букв и специальных символов
-                const hasUpper = /[A-ZA-ЯЁ]/.test(originalPassword);
-                const hasLower = /[a-za-яё]/.test(originalPassword);
-                const hasOtherSpecial = /[^a-za-яёA-ZA-ЯЁ0-9@#]/u.test(originalPassword);
+// Шаг 5: Проверка регистра букв и специальных символов
+const hasUpper = /[A-ZÀ-ÿ]/.test(originalPassword); // Латиница + кириллица (заглавные)
+const hasLower = /[a-zà-ÿ]/.test(originalPassword);   // Латиница + кириллица (строчные)
+const hasOtherSpecial = /[^a-zA-ZÀ-ÿ0-9@#]/u.test(originalPassword); // Спецсимволы кроме @# и букв/цифр
 
-                // Проверка наличия обоих регистров в исходном пароле
-                if (hasUpper && hasLower) {
-                    score++;
-                }
+// Проверка наличия обоих регистров в исходном пароле
+if (hasUpper && hasLower) {
+    score++;
+}
 
-                // Добавление балла за другие специальные символы
-                if (hasOtherSpecial) {
-                    score++;
-                }
+// Добавление балла за другие специальные символы
+if (hasOtherSpecial) {
+    score++;
+}
 
-                // Модификация регистра, если нужно
-                if (!hasUpper && /[a-za-яё]/.test(password)) {
-                    // Нет верхнего регистра — заменяем случайную букву на верхний
-                    const letterPositions = [];
-                    for (let i = 0; i < password.length; i++) {
-                        if (/[a-za-яё]/.test(password[i])) {
-                            letterPositions.push(i);
-                        }
-                    }
-                    if (letterPositions.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * letterPositions.length);
-                        const char = password[letterPositions[randomIndex]];
-                        password = password.substring(0, letterPositions[randomIndex]) +
-                           char.toUpperCase() +
-                           password.substring(letterPositions[randomIndex] + 1);
-                    }
-                } else if (!hasLower && /[A-ZA-ЯЁ]/.test(password)) {
-                    // Нет нижнего регистра — заменяем случайную заглавную на строчную
-                    const upperPositions = [];
-                    for (let i = 0; i < password.length; i++) {
-                        if (/[A-ZA-ЯЁ]/.test(password[i])) {
-                            upperPositions.push(i);
-                        }
-                    }
-                    if (upperPositions.length > 0) {
-                        const randomIndex = Math.floor(Math.random() * upperPositions.length);
-                        const char = password[upperPositions[randomIndex]];
-                        password = password.substring(0, upperPositions[randomIndex]) +
-                           char.toLowerCase() +
-                           password.substring(upperPositions[randomIndex] + 1);
-                    }
-                }
+// Модификация регистра, если нужно
+if (!hasUpper && /[a-zà-ÿ]/.test(password)) {
+    // Нет верхнего регистра — заменяем случайную букву на верхний
+    const letterPositions = [];
+    for (let i = 0; i < password.length; i++) {
+        if (/[a-zà-ÿ]/.test(password[i])) {
+            letterPositions.push(i);
+        }
+    }
+    if (letterPositions.length > 0) {
+        const randomIndex = Math.floor(Math.random() * letterPositions.length);
+        const char = password[letterPositions[randomIndex]];
+        password = password.substring(0, letterPositions[randomIndex]) +
+                   char.toUpperCase() +
+                   password.substring(letterPositions[randomIndex] + 1);
+    }
+} else if (!hasLower && /[A-ZÀ-ÿ]/.test(password)) {
+    // Нет нижнего регистра — заменяем случайную заглавную на строчную
+    const upperPositions = [];
+    for (let i = 0; i < password.length; i++) {
+        if (/[A-ZÀ-ÿ]/.test(password[i])) {
+            upperPositions.push(i);
+        }
+    }
+    if (upperPositions.length > 0) {
+        const randomIndex = Math.floor(Math.random() * upperPositions.length);
+        const char = password[upperPositions[randomIndex]];
+        password = password.substring(0, upperPositions[randomIndex]) +
+                   char.toLowerCase() +
+                   password.substring(upperPositions[randomIndex] + 1);
+    }
+}
 
                 // Отображение результата
                 resultDiv.textContent = password;
