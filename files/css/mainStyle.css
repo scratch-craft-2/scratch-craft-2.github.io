@@ -67,6 +67,16 @@ div.tutorial {
   font-size: 30px;
 }
 
+div.quote {
+    margin: 20px 0;
+    padding: 15px;
+    background-color: #00000012;
+    border-left: 4px solid #3498db;
+    border-radius: 4px;
+    font-family: monospace;
+    word-break: break-all;
+}
+
 div.textNorm {
   font-size: 16px;
 }
