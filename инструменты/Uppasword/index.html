@@ -274,7 +274,7 @@
         return {
             check: (pass) => debounce(pass)
         };
-    })();</script><h1>Проверка стойкости пароля</h1><div class="pass-checker" style="border-radius: 5px; padding: 20px; background-color: rgb(157, 230, 148);">
+    })();</script><h1>Проверка стойкости пароля</h1><div class="pass-checker" style="border-radius: 5px; padding: 20px; background-color: rgb(244, 247, 247);">
 	<table>
 		<tbody><tr>
             <td><label for="pass-check-input">Пароль:</label></td>
@@ -283,12 +283,12 @@
 			</td>
 		</tr>
 	</tbody></table>
-	<div class="pass-checker_info" id="passResult" style="display: block;">
+	<div class="pass-checker_info" id="passResult" style="display: none;">
 		<div class="pass-checker_info__reason">
-			Результат: <span id="check-reason" style="color: rgb(35, 143, 0);">надёжный</span>
+			Результат: <span id="check-reason" style="color: rgb(198, 0, 0);">ненадёжный</span>
 		</div>
-		<div class="pass-checker_info__time" style="color: rgb(35, 143, 0);">
-			Ваш пароль может быть взломан за&nbsp;<span id="resStr">3574412 лет</span>
+		<div class="pass-checker_info__time" style="color: rgb(198, 0, 0);">
+			Ваш пароль может быть взломан за&nbsp;<span id="resStr">0 секунд</span>
 		</div>
 		<div class="pass-checker_info__warn">
 			<span id="pass-warn-msg"></span>
@@ -507,6 +507,7 @@ if (!hasUpper && /[a-zà-ÿ]/.test(password)) {
             });
         });
     </script>
+
 
 
 
