@@ -118,6 +118,15 @@ div.tutorial:hover {
   transform: translateY(-10px);
 }
 
+.part2 img {
+  transition: transform 0.4s ease-out;
+  transform: rotate(0turn);
+}
+
+.part2 img:hover {
+  transform: rotate(1turn);
+}
+
 div.nav {
   background-color: #3f98ff;
   background-image: url("https://tochka-school.ru/themes/school-point/assets/img/discount-august/bg.png");
