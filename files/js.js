@@ -23,6 +23,12 @@ function ready() {
         console.log(script_object);
         document.head.appendChild(script_object);
     }
+
+document.querySelectorAll('img').forEach(img => {
+    img.setAttribute('draggable', 'false');
+});
+
+
 }
 document.addEventListener("DOMContentLoaded", ready);
 
