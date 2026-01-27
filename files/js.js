@@ -363,3 +363,9 @@ document.addEventListener('DOMContentLoaded', function() {
   updateSidebarState(); // Инициализация
 });
 
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a').forEach(link => {
+        link.setAttribute('target', '_blank');
+    });
+});
+
