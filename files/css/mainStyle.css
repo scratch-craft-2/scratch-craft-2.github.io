@@ -67,6 +67,19 @@ div.tutorial {
   font-size: 30px;
 }
 
+.cap-list__tag {
+    font-size: 14px;
+    line-height: 100%;
+    color: #6683c2;
+    min-height: 26px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 12px;
+    background: rgba(102, 131, 194, .08);
+    border-radius: 33px;
+}
+
 div.quote {
     margin: 20px 0;
     padding: 15px;
