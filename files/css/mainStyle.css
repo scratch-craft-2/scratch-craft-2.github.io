@@ -101,7 +101,8 @@ div.tutorialdark {
 }
 
 div.tutorial:hover {
-  box-shadow: 0px 0px 15px #575e75;
+  box-shadow: 0px 10px 15px #0000002b;
+  transform: translateY(-10px);
 }
 
 div.nav {
@@ -129,6 +130,10 @@ img.sizeconrol {
   min-height: 299px;
   max-width: 321px;
   max-height: 317px;
+}
+
+div.main {
+  max-width: 1000px;
 }
 
 div.content {
@@ -332,6 +337,7 @@ div.content_group.contributors-listdark {
 div.content_group.contributors-list > .button.contributor-type1 {
   --button-hov-bg: #cccccc;
   --button-hov-border: #878686;
+flex: 1 1 calc(10% - 4px);
 }
 div.content_group.contributors-list > .button.contributor-type1 > img {
   width: 40px;
@@ -378,6 +384,7 @@ div.part2 {
   background-color: #cce0fe;
   height: auto;
   color: #32353a;
+  border-radius: 5px;
 }
 
 #leaf-container {
