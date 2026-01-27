@@ -295,6 +295,13 @@
         returnFocus.focus();
       }
     });
+
+    document.querySelectorAll('.btn-primary').forEach(function(button) {
+    button.addEventListener('click', function() {
+        window.open('https://t.me/creative_programmer', '_blank');
+    });
+});
+
   </script>
     <div class="content">
       Вопросы или проблемы на сайте?
