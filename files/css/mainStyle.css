@@ -217,6 +217,7 @@ div.content_group.image-and-text > div {
       padding: 14px 40px 14px;
       color: white;
        border: none;
+          user-select: none;
     }
 
     button:hover:not(.btn-secondary) {
