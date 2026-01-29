@@ -153,5 +153,58 @@
         </div>
       </a>
     </div>
+    <div class="content"><hr align="center" width="80%" size="3" color="#575e75"><div style="
+    gap: 10px;
+    display: flex;
+"><button id="openModal">🌟Задонатить</button><a href="https://forms.yandex.ru/u/6754576602848f4b771de003/" target="_blank"><button>Связатся</button></a><a href="https://t.me/creative_programmer" target="_blank"><button>Телеграмм</button></a><a href="https://t.me/creative_programmer?direct" target="_blank"><button>Директ</button></a></div><hr align="center" width="80%" size="3" color="#575e75"></div>
+      <dialog id="myModal">
+    <h2 id="modalTitle">🌟Задонатить</h2>
+    <p>Вы на верном пути!</p>
+        <p>Вариант 1. Отправить Telegram stars на <a class="link" href="https://t.me/creative_programmer/1854" target="_blank">любой пост в моем телеграмм канале</a></p>
+
+<p>Будут появлятся и другие способы, тут только проверенные.</p>
+    <div class="modal-footer">
+      <form method="dialog">
+        <button type="button" id="cancelBtn" class="btn-secondary">Вернутся обратно</button>
+       <a href="https://t.me/creative_programmer"> <button type="submit" value="confirm" class="btn-primary">Перейти в ТГК</button></a>
+      </form>
+    </div>
+  </dialog>
+
+  <script>
+    const modal = document.getElementById('myModal');
+    const openButton = document.getElementById('openModal');
+    const cancelButton = document.getElementById('cancelBtn');
+    let returnFocus = null;
+
+    // Открытие модального окна
+    openButton.addEventListener('click', () => {
+      returnFocus = document.activeElement;
+      modal.showModal();
+    });
+
+    // Закрытие по кнопке "Отмена"
+    cancelButton.addEventListener('click', () => {
+      modal.close('cancelled');
+    });
+
+    // Обработка результата закрытия
+    modal.addEventListener('close', () => {
+      const result = modal.returnValue;
+      console.log('Окно закрыто. Результат:', result);
+
+      // Возвращаем фокус на исходный элемент
+      if (returnFocus) {
+        returnFocus.focus();
+      }
+    });
+
+    document.querySelectorAll('.btn-primary').forEach(function(button) {
+    button.addEventListener('click', function() {
+        window.open('https://t.me/creative_programmer', '_blank');
+    });
+});
+
+  </script>
   </body>
 </html>
