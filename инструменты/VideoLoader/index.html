@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8" />
+    <title>Главная страница | сайт scratch_craft_2</title>
+    <link
+      rel="shortcut icon"
+      href="https://scratch-craft-2.github.io/files/img/favicon.png"
+      type="image/png"
+    />
+    <link rel="icon" href="/files/img/favicon.png" type="image/png" />
+    <link id="theme-style" rel="stylesheet" href="https://scratch-craft-2.github.io/files/css/mainStyle.css" />
+    <meta property="og:title" content="главная страница" />
+    <meta property="og:site_name" content="сайт scratch_craft_2" />
+    <meta property="og:url" content="https://scratch-craft-2.github.io/" />
+    <meta
+      property="og:description"
+      content="сайт скретчера scratch_craft_2 - главная страница"
+    />
+    <meta
+      property="og:image"
+      content="https://scratch-craft-2.github.io/files/img/favicon.png"
+    />
+    <meta
+      name="description"
+      content="сайт scratch_craft_2 - музыка для проектов, туториалы по скретчу и многое другое!"
+    />
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+    <div class="nav">
+      <a href="/" style="text-decoration: none; color: #fff !important" target="_blank"><b style="font-size: 32px; padding: 5px; margin: 15px">Сайт scratch_craft_2</b></a>
+    </div><div class="content">
+    <div class="container">
+        <h1>Скачивание видео по ссылке</h1>
+        <input type="text" id="videoUrl" placeholder="Введите ссылку на видео" />
+        <button onclick="handleDownload()">Скачать</button>
+    </div></div>
+
+    <script>
+        async function downloadFromLink(videoUrl) {
+            const api = "https://api.get-save.com/api/v1/vidinfo";
+
+            try {
+                const res = await fetch(api, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        url: videoUrl
+                    })
+                });
+
+                const data = await res.json();
+
+                if (!data || !data.sizes) {
+                    throw "Видео не найдено";
+                }
+
+                // Берём лучшее качество в формате mp4
+                const video = data.sizes
+                    .filter(v => v.ext === "mp4")
+                    .sort((a, b) => b.height - a.height)[0];
+
+                if (!video) {
+                    throw "Файл недоступен";
+                }
+
+                // Создаём ссылку для скачивания
+                const link = document.createElement("a");
+                link.href = video.url;
+                link.download = "video.mp4";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+
+            } catch (e) {
+                console.error(e);
+                alert("Ошибка скачивания: " + (e.message || e));
+            }
+        }
+
+        function handleDownload() {
+            const input = document.getElementById("videoUrl");
+            const url = input.value.trim();
+
+            if (!url) {
+                alert("Введите ссылку на видео");
+                return;
+            }
+
+            // Проверка на корректность URL
+            try {
+                new URL(url);
+            } catch (_) {
+                alert("Введите корректный URL");
+                return;
+            }
+
+            downloadFromLink(url);
+        }
+    </script>
+</body>
+</html>
