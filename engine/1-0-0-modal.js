@@ -1,4 +1,4 @@
-  // Скрипт для открытия модальных окон по атрибуту modal
+  // Скрипт для открытия модальных окон по атрибуту modal 
   document.addEventListener('DOMContentLoaded', () => {
     // Находим все элементы с классом cre-dialog-open
     const openTriggers = document.querySelectorAll('.cre-dialog-open');
