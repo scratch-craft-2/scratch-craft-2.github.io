@@ -80,10 +80,11 @@ div.creG.iat > img {
       color: white;
        border: none;
           user-select: none;
+      transition: 0.1s linear
     }
 
     button.cre-button:hover:not(.btn-secondary) {
-     background: #fa9176
+opacity: 0.85
         }
   
   
