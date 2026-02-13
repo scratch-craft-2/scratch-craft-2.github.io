@@ -71,7 +71,7 @@ div.creG.iat > img {
   }
   
 /* Красивый класс для кнопок */
-    button {
+    button.cre-button {
       font-size: 16px;
       cursor: pointer;
       border-radius: 13px;
@@ -82,7 +82,7 @@ div.creG.iat > img {
           user-select: none;
     }
 
-    button:hover:not(.btn-secondary) {
+    button.cre-button:hover:not(.btn-secondary) {
      background: #fa9176
         }
   
