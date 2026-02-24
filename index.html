@@ -321,6 +321,66 @@
 });
 
   </script>
+    <script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Генерируем случайное число от 1 до 5
+    const randomNumber = Math.floor(Math.random() * 5) + 1;
+
+    // Проверяем, равно ли число 1 (шанс 1 из 5 = 20 %)
+    if (randomNumber === 1) {
+      // Находим элемент с классом control-cont
+      const targetDiv = document.querySelector('.control-cont');
+
+      // Если элемент найден, создаём новый контент
+      if (targetDiv) {
+        // Создаём контейнер для нового контента
+        const newDiv = document.createElement('div');
+        newDiv.className = 'content';
+
+        // HTML-код нового блока (экранируем кавычки)
+        newDiv.innerHTML = `
+          <div class="coursegift" style="
+            position: relative;
+            height: 50px;
+            padding: 30px 25px;
+            width: clamp(305px, 700px, 900px);
+            background-image: url(https://tochka-school.ru/themes/school-point/assets/img/info/info-bg_tablet.png?ver=28.01.26);
+            background-size: 100% 100%;
+            background-repeat: no-repeat;
+            background-position: center center;
+            border-radius: 15px;
+            border-color: #00000040;
+            border-width: 3.5px;
+            border-style: solid;
+          ">
+            <div class="content_group image-and-text left" style="">
+              <img src="/files/img/Group 1.svg" style="
+                top: -70px;
+                position: relative;
+                width: 90px;
+              ">
+              <h4 style="
+                position: relative;
+                top: -25px;
+                max-width: 300px;
+              ">Вы можете купить курс по монтажу со скидкой, прямо сейчас и только по этой кнопке →</h4>
+              <a href="https://stepik.org/a/207495/pay?promo=ba75179d850dd36d" style="
+                top: -25px;
+                position: relative;
+              ">
+                <button>Купить по скидке</button>
+              </a>
+            </div>
+          </div>
+        `;
+
+        // Вставляем новый блок сразу после targetDiv
+        targetDiv.insertAdjacentElement('afterend', newDiv);
+      }
+    }
+  });
+</script>
+
   </body>
 </html>
 
