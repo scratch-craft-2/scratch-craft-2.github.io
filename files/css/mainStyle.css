@@ -704,3 +704,35 @@ div.part2 {
   padding: 20px;
   transition: margin-left 0.4s ease-out;
 }
+
+.skidka
+ {
+    position: absolute;
+    top: -1.198rem;
+    right: -1.3rem;
+    /* font-family: font-heading; */
+    /* font-size: 1.4372rem; */
+    font-style: normal;
+    font-weight: 500;
+    line-height: 95%;
+    /* letter-spacing: -.0287rem; */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .8069rem .9221rem;
+    color: #f7f7f7;
+    border-radius: .7186rem;
+    /* background: linear-gradient(171deg, #ff5c1b 1.25%, #ff1b1b 115.06%); */
+    background: linear-gradient(171deg, #ec876d 1.25%, #ff1b1b 115.06%);
+    box-shadow: .288px .288px .576px #ffffffd9 inset, -.576px .576px 1.153px #ff5c1b4d, .576px 1.729px 6.916px #fff6 inset;
+    transform: rotate(5.032deg);
+    width: 80px;
+}
+
+@font-face {
+    font-family: font-heading;
+    src: url(https://slider-ai.ru/static_site/fonts/HovesPro/TT_Hoves_Pro_Medium.woff2) format("woff2"), url(https://slider-ai.ru/static_site/fonts/HovesPro/TT_Hoves_Pro_Medium.woff) format("woff");
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
