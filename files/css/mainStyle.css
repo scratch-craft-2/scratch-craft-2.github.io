@@ -747,9 +747,9 @@ header a {
 
 header li {
   text-decoration: none;
-  color: #f9fcff;
+  color: #575e75;
   padding: 7px 9px;
-  background: #fff;
+  background: #f9fcff;
   filter: brightness(100%);
   border-radius: 3px;
   transition: transform 0.3s ease;
@@ -760,12 +760,12 @@ filter: brightness(95%);
 }
 
 .headerpage {
-  background: #fff;
+  background: #f1f5f9;
   border-radius: 10px;
   max-height: 90px;
   list-style-type: none;
   display: flex;
-  color: #f1f5f9;
+  color: #575e75;
 }
 
 header ul{
