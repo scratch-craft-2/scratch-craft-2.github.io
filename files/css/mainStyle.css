@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Changa+One:ital@0;1&display=swap');
+
 
 html { 
   --looks-bg: white;
@@ -17,6 +19,7 @@ html {
   --sidebar-width: 250px;
   --sidebar-visible: 1;
   --sidebar-bg: #ced8e3;
+    overflow-x: hidden;
 }
 html::selection {
   background: var(--selection-bg);
@@ -735,4 +738,46 @@ div.part2 {
     font-weight: 500;
     font-style: normal;
     font-display: swap;
+}
+
+
+header a {
+  text-decoration: none
+}
+
+header li {
+  text-decoration: none;
+  color: #575e75;
+  padding: 7px 9px;
+  background: #fff;
+  filter: brightness(100%);
+  border-radius: 3px;
+  transition: transform 0.3s ease;
+}
+
+header li:hover {
+filter: brightness(95%);
+}
+
+.headerpage {
+  background: #fff;
+  border-radius: 10px;
+  max-height: 90px;
+  list-style-type: none;
+  display: flex;
+  color: #575e75;
+}
+
+header ul{
+  list-style-type: none;
+  display: flex;
+  gap: 15px;
+  float: right;
+  width: 100%;
+}
+
+header {
+  padding: 15px;
+  align-items: center;
+  background: #f1f5f9;
 }
