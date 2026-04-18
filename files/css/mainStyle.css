@@ -747,7 +747,7 @@ header a {
 
 header li {
   text-decoration: none;
-  color: #575e75;
+  color: #f9fcff;
   padding: 7px 9px;
   background: #fff;
   filter: brightness(100%);
@@ -765,7 +765,7 @@ filter: brightness(95%);
   max-height: 90px;
   list-style-type: none;
   display: flex;
-  color: #575e75;
+  color: #f1f5f9;
 }
 
 header ul{
@@ -779,5 +779,5 @@ header ul{
 header {
   padding: 15px;
   align-items: center;
-  background: #f1f5f9;
+  background: #fff;
 }
