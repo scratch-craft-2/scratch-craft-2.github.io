@@ -489,7 +489,8 @@ div.part2 {
   background-color: #cce0fe;
   height: auto;
   color: #32353a;
-  border-radius: 5px;
+  border-radius: 10px;
+  border-bottom: #7c8798 4px solid;
 }
 
 #leaf-container {
