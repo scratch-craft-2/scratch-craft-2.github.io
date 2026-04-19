@@ -827,3 +827,22 @@ padding: 10px;
 transform: scale(0.95);
 filter: brightness(98%);
 }
+
+ .hide800 {
+   @media (max-width: 800px) {
+  display: none
+}
+ }
+
+ .hide600 {
+   @media (max-width: 600px) {
+  display: none
+}
+ }
+
+
+ .hide450 {
+   @media (max-width: 450px) {
+  display: none
+}
+ }
