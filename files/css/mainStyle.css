@@ -485,12 +485,13 @@ div.content_group.contributors-list > .buttondark.contributor-type1 {
 }
 
 div.part2 {
-  width: 100%;
-  background-color: #cce0fe;
+  background-color: #e5e3ff;
   height: auto;
   color: #32353a;
   border-radius: 10px;
-  border-bottom: #7c8798 4px solid;
+  border-bottom: #7b798f 4px solid;
+  padding: 10px;
+  margin: 0px 10px;
 }
 
 #leaf-container {
