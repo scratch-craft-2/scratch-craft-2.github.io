@@ -813,6 +813,9 @@ flex-direction: column;
 @media (min-width: 801px) {
 flex-direction: row;
 }
+@media (max-width: 700px) {
+border: none;
+}
 }
 
 .whatsnew .part {
