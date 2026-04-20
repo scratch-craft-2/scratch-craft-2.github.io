@@ -865,3 +865,17 @@ filter: brightness(98%);
   display: none
 }
  }
+
+div.control-cont div.tutorial {
+  @media (max-width: 450px) {
+    border: none;
+    transform: scale(0.8);
+    background: #f1f5f98a
+  }
+  @media (max-width: 400px) {
+    transform: scale(0.7);
+  }
+    @media (max-width: 350px) {
+    transform: scale(0.6);
+  }
+}
