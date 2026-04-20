@@ -854,6 +854,11 @@ filter: brightness(98%);
 }
  }
 
+ .hide700 {
+   @media (max-width: 700px) {
+  display: none
+}
+ }
 
  .hide450 {
    @media (max-width: 450px) {
